@@ -1,0 +1,23 @@
+.mainPage{
+  &Container{
+    margin: 5% 5%;
+    position: relative;
+    &__firstBlock {
+      display: grid;
+      grid-template:
+            "1fr 1fr"
+            "1fr 1fr"
+            "1fr 1fr";
+      gap: 50px 50px;
+      margin-bottom: 20px;
+    }
+    &__secondBlock {
+      display: flex;
+      flex-direction: column;
+      width: 400px;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+  }
+}
