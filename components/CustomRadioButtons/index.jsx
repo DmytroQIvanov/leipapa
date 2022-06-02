@@ -19,8 +19,8 @@ export default function CustomRadioButtonsGroup({buttonsArray,title,value,handle
                 value={value}
                 onChange={handleChange}
             >
-                {buttonsArray.map((elem)=>
-                    <FormControlLabel value={elem.value} control={<Radio />} label={elem.label} />
+                {buttonsArray.map((elem,index)=>
+                    <FormControlLabel key={index} value={elem.value} control={<Radio />} label={elem.label} />
                 )}
             </RadioGroup>
         </FormControl>
