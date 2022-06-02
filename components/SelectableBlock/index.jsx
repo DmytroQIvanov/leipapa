@@ -8,13 +8,14 @@ const Index = ({ label, required, state }) => {
   const handleClick = (state) => {
     setStateBlock(state || false);
   };
+
   return (
     <div>
 
-          <Typography className={styles.title}>{label}
+          <Box className={styles.title}>{label}
               {required && (
                   <Typography sx={{ color: "#d32f2f", ml: "4px" }}>*</Typography>
-              )}</Typography>
+              )}</Box>
 
       <Box className={styles.container}>
         <div

@@ -7,8 +7,9 @@ import MainPage from "../layouts/MainPage/MainPage";
 export default function Home() {
   return (
     <div className={styles.container}>
-
-        <Wrapper><MainPage/></Wrapper>
+        <Wrapper>
+            <MainPage/>
+        </Wrapper>
 
     </div>
   )
