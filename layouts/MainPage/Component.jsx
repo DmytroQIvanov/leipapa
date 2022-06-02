@@ -28,7 +28,7 @@ const Component = ({ data }) => {
       setStateVisibly(false);
     }
   }, [values.country]);
-  const { countriesList } = useCountry();
+  const { countriesList,companyList } = useCountry({companyTextInput:values.companyText});
   return (
     <form onSubmit={handleSubmit} className={styles.mainPage}>
       <div className={styles.mainPageContainer}>
@@ -78,6 +78,7 @@ const Component = ({ data }) => {
             label={"Application first and last name"}
             required
             questionLink={"smth"}
+            name={'email'}
             variant="standard"
             size={"medium"}
             value={values.email}
@@ -85,10 +86,33 @@ const Component = ({ data }) => {
             error={touched.fullName && errors.fullName}
             helperText={touched.fullName && errors.fullName}
           />
-          <CustomInput
-            label="Legal entity name (start typing org name - autofill possible)"
-            required
-          />
+          {/*<CustomInput*/}
+          {/*  label="Legal entity name (start typing org name - autofill possible)"*/}
+          {/*  name={'companyText'}*/}
+          {/*  required*/}
+          {/*/>*/}
+
+            <Autocomplete
+                disablePortal
+                options={companyList}
+                getOptionLabel={(option) => option.attributes.value}
+                fullWidth={true}
+                id="combo-box-demo"
+                onChange={(e, value) => setFieldValue("country", value)}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        label="Legal entity name (start typing org name - autofill possible)"
+                        variant="standard"
+                        name={'companyText'}
+                        value={values.companyText}
+                        onChange={handleChange}
+                        required
+                        error={touched.companyText && Boolean(errors.companyText)}
+                        helperText={touched.companyText && errors.companyText}
+                    />
+                )}
+            />
           <CustomInput
             label="E-mail"
             required
