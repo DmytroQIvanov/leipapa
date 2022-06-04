@@ -17,7 +17,27 @@
       width: 400px;
       gap: 20px;
       margin-bottom: 20px;
-    }
+      &Terms{
 
+      }
+    }
+    @media screen and (max-width: 900px) {
+      &__firstBlock {
+        display: flex;
+        flex-direction: column;
+        //row-gap: 10px;
+      }
+      &__secondBlock {
+        width: 100%;
+        &Terms{
+          //font-size: 13px!important;
+          span{
+            font-size: 13px!important;
+
+          }
+        }
+
+      }
+    }
   }
 }

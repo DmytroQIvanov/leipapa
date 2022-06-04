@@ -11,11 +11,12 @@ const Index = ({ label, required, state }) => {
 
   return (
     <div>
-
-          <Box className={styles.title}>{label}
-              {required && (
-                  <Typography sx={{ color: "#d32f2f", ml: "4px" }}>*</Typography>
-              )}</Box>
+      <Box className={styles.title}>
+        {label}
+        {required && (
+          <Typography sx={{ color: "#d32f2f", ml: "4px" }}>*</Typography>
+        )}
+      </Box>
 
       <Box className={styles.container}>
         <div

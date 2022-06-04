@@ -24,8 +24,8 @@ const UseCountry = ({companyTextInput}) => {
     axios
       .get(`https://api.gleif.org/api/v1/fuzzycompletions?field=fulltext&q=${companyText}`)
       .then((data) => {
-          setCompanyList(data.data.data)
-          console.log(data.data.data)
+          setCompanyList(data.data.data);
+          console.log(data.data.data);
       })
   }, [companyText]);
   return { countriesList,companyList };

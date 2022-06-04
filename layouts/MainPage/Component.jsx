@@ -13,6 +13,7 @@ import CustomInput from "../../components/CustomInput";
 import SelectableBlock from "../../components/SelectableBlock";
 import useCountry from "../../hooks/useCountry";
 import CustomRadioButtonsGroup from "../../components/CustomRadioButtons";
+import ConfirmModal from "../../components/ConfirmModal";
 
 const Component = ({ data }) => {
   console.log(data);
@@ -28,7 +29,16 @@ const Component = ({ data }) => {
       setStateVisibly(false);
     }
   }, [values.country]);
-  const { countriesList,companyList } = useCountry({companyTextInput:values.companyText});
+  const { countriesList, companyList } = useCountry({
+    companyTextInput: values.companyText,
+  });
+  const [confirmModalState, setConfirmModalState] = useState(false);
+  const handleClose = () => {
+    setConfirmModalState(false);
+  };
+  const handleOpen = () => {
+    setConfirmModalState(true);
+  };
   return (
     <form onSubmit={handleSubmit} className={styles.mainPage}>
       <div className={styles.mainPageContainer}>
@@ -78,7 +88,7 @@ const Component = ({ data }) => {
             label={"Application first and last name"}
             required
             questionLink={"smth"}
-            name={'email'}
+            name={"email"}
             variant="standard"
             size={"medium"}
             value={values.email}
@@ -92,27 +102,27 @@ const Component = ({ data }) => {
           {/*  required*/}
           {/*/>*/}
 
-            <Autocomplete
-                disablePortal
-                options={companyList}
-                getOptionLabel={(option) => option.attributes.value}
-                fullWidth={true}
-                id="combo-box-demo"
-                onChange={(e, value) => setFieldValue("country", value)}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label="Legal entity name (start typing org name - autofill possible)"
-                        variant="standard"
-                        name={'companyText'}
-                        value={values.companyText}
-                        onChange={handleChange}
-                        required
-                        error={touched.companyText && Boolean(errors.companyText)}
-                        helperText={touched.companyText && errors.companyText}
-                    />
-                )}
-            />
+          <Autocomplete
+            disablePortal
+            options={companyList}
+            getOptionLabel={(option) => option.attributes.value}
+            fullWidth={true}
+            id="combo-box-demo"
+            onChange={(e, value) => setFieldValue("country", value)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Legal entity name (start typing org name - autofill possible)"
+                variant="standard"
+                name={"companyText"}
+                value={values.companyText}
+                onChange={handleChange}
+                required
+                error={touched.companyText && Boolean(errors.companyText)}
+                helperText={touched.companyText && errors.companyText}
+              />
+            )}
+          />
           <CustomInput
             label="E-mail"
             required
@@ -131,42 +141,48 @@ const Component = ({ data }) => {
         <SelectableBlock
           label={"Headquartes address is identical to legal address?"}
         />
-<Box sx={{display:'flex',flexDirection:'column',mb:'15px'}}>
+        <Box sx={{ display: "flex", flexDirection: "column", mb: "15px" }}>
           <CustomRadioButtonsGroup
-              title={"???"}
-              value={values.typeOfEmployment}
-              handleChange={(e,value)=>{
-                  console.log(value)
-                  setFieldValue('typeOfEmployment',value)}}
-              buttonsArray={[{ label: "Private person",value:'private' }, { label: "Company",value:'company' }]}
+            title={"???"}
+            value={values.typeOfEmployment}
+            handleChange={(e, value) => {
+              console.log(value);
+              setFieldValue("typeOfEmployment", value);
+            }}
+            buttonsArray={[
+              { label: "Private person", value: "private" },
+              { label: "Company", value: "company" },
+            ]}
           />
-          {values.typeOfEmployment=='company' && <input type={'file'}/>}
-
-</Box>
-          <Box className={styles.mainPageContainer__secondBlock}>
+          {values.typeOfEmployment == "company" && <input type={"file"} />}
+        </Box>
+        <Box className={styles.mainPageContainer__secondBlock}>
           <Typography fontWeight={700} fontSize={20}>
             Entity Address
           </Typography>
           <CustomInput
             label={"Entity address"}
             required
-            value={values.email}
+            name={"entityAddress"}
+            value={values.entityAddress}
             onChange={handleChange}
-            error={touched.fullName && errors.fullName}
+            error={touched.entityAddress && errors.entityAddress}
           />
           <CustomInput
             label={"City"}
+            name={"entityCity"}
             required
-            value={values.email}
+            value={values.entityCity}
             onChange={handleChange}
-            error={touched.fullName && errors.fullName}
+            error={touched.entityCity && errors.entityCity}
           />
           <CustomInput
             label={"Postal code"}
             required
-            value={values.email}
+            name={"entityPostalCode"}
+            value={values.entityPostalCode}
             onChange={handleChange}
-            error={touched.fullName && errors.fullName}
+            error={touched.entityPostalCode && errors.entityPostalCode}
           />
         </Box>
         <SelectableBlock
@@ -175,16 +191,26 @@ const Component = ({ data }) => {
         />
         <FormControlLabel
           value="end"
+          className={styles.mainPageContainer__secondBlockTerms}
           control={<Checkbox />}
           label="*I here by accept the Terms & Conditions of LEI Register and give permission to apply for an LEI"
           sx={{ color: "#989898" }}
           labelPlacement="*I here by accept the Terms & Conditions of LEI Register and give permission to apply for an LEI"
         />
         <Box sx={{ display: "flex" }}>
-          <Button type={"submit"} variant={"contained"} sx={{ m: "20px auto" }}>
+          <Button
+            onClick={() => handleOpen()}
+            variant={"contained"}
+            sx={{ m: "20px auto" }}
+          >
             Submit
           </Button>
         </Box>
+        <ConfirmModal
+          modalOpen={confirmModalState}
+          handleClose={handleClose}
+          handleConfirm={handleSubmit}
+        />
       </div>
     </form>
   );
