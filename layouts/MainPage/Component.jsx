@@ -23,14 +23,15 @@ const Component = ({ data }) => {
   const arrayCountriesWithState = ["CA", "US"];
 
   useEffect(() => {
-    if (arrayCountriesWithState.includes(values.country.id)) {
+    if (arrayCountriesWithState.includes(values.country.iso2)) {
       setStateVisibly(true);
     } else {
       setStateVisibly(false);
     }
   }, [values.country]);
-  const { countriesList, companyList } = useCountry({
+  const { countriesList, companyList, statesList } = useCountry({
     companyTextInput: values.companyText,
+    selectedCountry: values.country,
   });
   const [confirmModalState, setConfirmModalState] = useState(false);
   const handleClose = () => {
@@ -47,7 +48,8 @@ const Component = ({ data }) => {
             <Autocomplete
               disablePortal
               options={countriesList}
-              getOptionLabel={(option) => option.attributes.name}
+              // getOptionLabel={(option) => option.attributes.name}
+              getOptionLabel={(option) => option.country}
               fullWidth={true}
               id="combo-box-demo"
               sx={stateVisibly ? { mr: "26px" } : {}}
@@ -66,11 +68,11 @@ const Component = ({ data }) => {
             {stateVisibly && (
               <Autocomplete
                 disablePortal
-                options={countriesList}
-                getOptionLabel={(option) => option.attributes.name}
+                options={statesList}
+                getOptionLabel={(option) => option.name}
                 fullWidth={true}
                 id="combo-box-demo"
-                onChange={(e, value) => setFieldValue("country", value)}
+                onChange={(e, value) => setFieldValue("state", value)}
                 renderInput={(params) => (
                   <TextField
                     {...params}
