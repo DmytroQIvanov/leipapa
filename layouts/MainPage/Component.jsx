@@ -22,8 +22,10 @@ const Component = ({ data }) => {
   const [stateVisibly, setStateVisibly] = useState(false);
   const arrayCountriesWithState = ["CA", "US"];
 
+  const [inputCountry, setInpuCountry] = useState("");
+
   useEffect(() => {
-    if (arrayCountriesWithState.includes(values.country.iso2)) {
+    if (arrayCountriesWithState.includes(values.country.id)) {
       setStateVisibly(true);
     } else {
       setStateVisibly(false);
@@ -40,6 +42,18 @@ const Component = ({ data }) => {
   const handleOpen = () => {
     setConfirmModalState(true);
   };
+
+  const getHighlightedText = (text, highlight) => {
+    // Split text on highlight term, include term itself into parts, ignore case
+    const parts = text.split(new RegExp(`(${highlight})`, "gi"));
+    return (
+      <span>
+        {parts.map((part) =>
+          part.toLowerCase() === highlight.toLowerCase() ? <b>{part}</b> : part
+        )}
+      </span>
+    );
+  };
   return (
     <form onSubmit={handleSubmit} className={styles.mainPage}>
       <div className={styles.mainPageContainer}>
@@ -48,15 +62,44 @@ const Component = ({ data }) => {
             <Autocomplete
               disablePortal
               options={countriesList}
-              // getOptionLabel={(option) => option.attributes.name}
-              getOptionLabel={(option) => option.country}
+              getOptionLabel={(option) =>
+                `${option.attributes.name} ${option.attributes.code}`
+              }
               fullWidth={true}
               id="combo-box-demo"
+              renderOption={(props, option, { selected }) => {
+                // console.log("option", option);
+                // console.log("props", props);
+
+                let optionString = `${option.attributes.name} ${option.attributes.code}`;
+
+                return (
+                  <li {...props}>
+                    <Box
+                      display={"flex"}
+                      flexDirection={"row"}
+                      // style={{ backgroundColor: selected ? "red" : "green" }}
+                    >
+                      <Box display={"flex"} ml={0} flexDirection={"column"}>
+                        {/*<Typography>{optionString}</Typography>*/}
+                        <Typography>
+                          {getHighlightedText(optionString, inputCountry)}
+                        </Typography>
+                        {/*<Typography color={"text.secondary"}>*/}
+                        {/*  Extra Information*/}
+                        {/*</Typography>*/}
+                      </Box>
+                    </Box>
+                  </li>
+                );
+              }}
               sx={stateVisibly ? { mr: "26px" } : {}}
               onChange={(e, value) => setFieldValue("country", value)}
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  value={inputCountry}
+                  onChange={(event) => setInpuCountry(event.target.value)}
                   label="Select Country"
                   variant="standard"
                   required
@@ -69,7 +112,7 @@ const Component = ({ data }) => {
               <Autocomplete
                 disablePortal
                 options={statesList}
-                getOptionLabel={(option) => option.name}
+                getOptionLabel={(option) => option.attributes.names[0].name}
                 fullWidth={true}
                 id="combo-box-demo"
                 onChange={(e, value) => setFieldValue("state", value)}
