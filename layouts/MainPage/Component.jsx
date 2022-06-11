@@ -16,14 +16,23 @@ import CustomRadioButtonsGroup from "../../components/CustomRadioButtons";
 import ConfirmModal from "../../components/ConfirmModal";
 
 const Component = ({ data }) => {
-  console.log(data);
+  //HOOKS
   const { values, touched, errors, handleSubmit, handleChange, setFieldValue } =
     data;
-  const [stateVisibly, setStateVisibly] = useState(false);
+  const { countriesList, statesList, companiesList } = useCountry({
+    selectedCountry: values.country,
+  });
+
+  //STATES
   const arrayCountriesWithState = ["CA", "US"];
+  const [stateVisibly, setStateVisibly] = useState(false);
+  const [confirmModalState, setConfirmModalState] = useState(false);
 
-  const [inputCountry, setInpuCountry] = useState("");
+  const [inputCountry, setInputCountry] = useState("");
+  const [inputStates, setInputStates] = useState("");
+  const [inputCompanies, setInputCompanies] = useState("");
 
+  //USE-EFFECTS
   useEffect(() => {
     if (arrayCountriesWithState.includes(values.country.id)) {
       setStateVisibly(true);
@@ -31,11 +40,8 @@ const Component = ({ data }) => {
       setStateVisibly(false);
     }
   }, [values.country]);
-  const { countriesList, companyList, statesList } = useCountry({
-    companyTextInput: values.companyText,
-    selectedCountry: values.country,
-  });
-  const [confirmModalState, setConfirmModalState] = useState(false);
+
+  //FUNCTIONS
   const handleClose = () => {
     setConfirmModalState(false);
   };
@@ -44,7 +50,6 @@ const Component = ({ data }) => {
   };
 
   const getHighlightedText = (text, highlight) => {
-    // Split text on highlight term, include term itself into parts, ignore case
     const parts = text.split(new RegExp(`(${highlight})`, "gi"));
     return (
       <span>
@@ -54,11 +59,36 @@ const Component = ({ data }) => {
       </span>
     );
   };
+
+  const renderOptionsFunction = ({
+    props,
+    option,
+    selected,
+    optionString,
+    inputText,
+  }) => {
+    return (
+      <li {...props}>
+        <Box
+          display={"flex"}
+          flexDirection={"row"}
+          // style={{ backgroundColor: selected ? "red" : "green" }}
+        >
+          <Box display={"flex"} ml={0} flexDirection={"column"}>
+            <Typography>
+              {getHighlightedText(optionString, inputText)}
+            </Typography>
+          </Box>
+        </Box>
+      </li>
+    );
+  };
   return (
     <form onSubmit={handleSubmit} className={styles.mainPage}>
       <div className={styles.mainPageContainer}>
         <div className={styles.mainPageContainer__firstBlock}>
           <div style={{ display: "flex" }}>
+            {/*---COUNTRIES---*/}
             <Autocomplete
               disablePortal
               options={countriesList}
@@ -67,31 +97,16 @@ const Component = ({ data }) => {
               }
               fullWidth={true}
               id="combo-box-demo"
+              loading={countriesList.length <= 0}
               renderOption={(props, option, { selected }) => {
-                // console.log("option", option);
-                // console.log("props", props);
-
                 let optionString = `${option.attributes.name} ${option.attributes.code}`;
-
-                return (
-                  <li {...props}>
-                    <Box
-                      display={"flex"}
-                      flexDirection={"row"}
-                      // style={{ backgroundColor: selected ? "red" : "green" }}
-                    >
-                      <Box display={"flex"} ml={0} flexDirection={"column"}>
-                        {/*<Typography>{optionString}</Typography>*/}
-                        <Typography>
-                          {getHighlightedText(optionString, inputCountry)}
-                        </Typography>
-                        {/*<Typography color={"text.secondary"}>*/}
-                        {/*  Extra Information*/}
-                        {/*</Typography>*/}
-                      </Box>
-                    </Box>
-                  </li>
-                );
+                return renderOptionsFunction({
+                  props,
+                  option,
+                  selected,
+                  optionString,
+                  inputText: inputCountry,
+                });
               }}
               sx={stateVisibly ? { mr: "26px" } : {}}
               onChange={(e, value) => setFieldValue("country", value)}
@@ -99,7 +114,7 @@ const Component = ({ data }) => {
                 <TextField
                   {...params}
                   value={inputCountry}
-                  onChange={(event) => setInpuCountry(event.target.value)}
+                  onChange={(event) => setInputCountry(event.target.value)}
                   label="Select Country"
                   variant="standard"
                   required
@@ -108,21 +123,39 @@ const Component = ({ data }) => {
                 />
               )}
             />
+
+            {/*---STATES---*/}
+
             {stateVisibly && (
               <Autocomplete
                 disablePortal
                 options={statesList}
-                getOptionLabel={(option) => option.attributes.names[0].name}
+                getOptionLabel={(option) =>
+                  `${option.attributes.names[0].name} ${option.attributes.code}`
+                }
                 fullWidth={true}
+                loading={statesList.length <= 0}
                 id="combo-box-demo"
                 onChange={(e, value) => setFieldValue("state", value)}
+                renderOption={(props, option, { selected }) => {
+                  let optionString = `${option.attributes.names[0].name} ${option.attributes.code}`;
+                  return renderOptionsFunction({
+                    props,
+                    option,
+                    selected,
+                    optionString,
+                    inputText: inputStates,
+                  });
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    value={inputStates}
+                    onChange={(event) => setInputStates(event.target.value)}
                     label="Select State"
                     variant="standard"
                     required
-                    error={touched.country && Boolean(errors.country)}
+                    error={touched.states && Boolean(errors.states)}
                     helperText={touched.fullName && errors.fullName}
                   />
                 )}
@@ -141,17 +174,26 @@ const Component = ({ data }) => {
             error={touched.fullName && errors.fullName}
             helperText={touched.fullName && errors.fullName}
           />
-          {/*<CustomInput*/}
-          {/*  label="Legal entity name (start typing org name - autofill possible)"*/}
-          {/*  name={'companyText'}*/}
-          {/*  required*/}
-          {/*/>*/}
 
+          {/*---Companies---*/}
           <Autocomplete
             disablePortal
-            options={companyList}
-            getOptionLabel={(option) => option.attributes.value}
+            options={companiesList}
+            getOptionLabel={(option) =>
+              `${option.attributes.names[0].localName} ${option.attributes.code}`
+            }
             fullWidth={true}
+            loading={companiesList.length <= 0}
+            renderOption={(props, option, { selected }) => {
+              let optionString = `${option.attributes.names[0].localName} ${option.attributes.code}`;
+              return renderOptionsFunction({
+                props,
+                option,
+                selected,
+                optionString,
+                inputText: values.companyText,
+              });
+            }}
             id="combo-box-demo"
             onChange={(e, value) => setFieldValue("country", value)}
             renderInput={(params) => (
@@ -162,6 +204,8 @@ const Component = ({ data }) => {
                 name={"companyText"}
                 value={values.companyText}
                 onChange={handleChange}
+                // onChange={(event) => setInputCompanies(event.target.value)}
+
                 required
                 error={touched.companyText && Boolean(errors.companyText)}
                 helperText={touched.companyText && errors.companyText}
