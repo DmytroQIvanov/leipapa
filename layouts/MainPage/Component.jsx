@@ -191,7 +191,7 @@ const Component = ({ data }) => {
                 option,
                 selected,
                 optionString,
-                inputText: values.companyText,
+                inputText: inputCompanies,
               });
             }}
             id="combo-box-demo"
@@ -202,10 +202,9 @@ const Component = ({ data }) => {
                 label="Legal entity name (start typing org name - autofill possible)"
                 variant="standard"
                 name={"companyText"}
-                value={values.companyText}
-                onChange={handleChange}
-                // onChange={(event) => setInputCompanies(event.target.value)}
-
+                value={inputCompanies}
+                // onChange={handleChange}
+                onChange={(event) => setInputCompanies(event.target.value)}
                 required
                 error={touched.companyText && Boolean(errors.companyText)}
                 helperText={touched.companyText && errors.companyText}
