@@ -11,15 +11,22 @@ import {
 import styles from "./MainPage.module.scss";
 import CustomInput from "../../components/CustomInput";
 import SelectableBlock from "../../components/SelectableBlock";
-import useCountry from "../../hooks/useCountry";
+import useMainPageSearch from "../../hooks/useMainPageSearch";
 import CustomRadioButtonsGroup from "../../components/CustomRadioButtons";
 import ConfirmModal from "../../components/ConfirmModal";
+import CountriesAutocomplete from "./Components/CountriesAutocomplete";
+import { renderOptionsFunction } from "./Functions/renderOptionsFunction";
 
 const Component = ({ data }) => {
   //HOOKS
   const { values, touched, errors, handleSubmit, handleChange, setFieldValue } =
     data;
-  const { countriesList, statesList, companiesList } = useCountry({
+  const {
+    countriesList,
+    statesList,
+    companiesList,
+    states: { companies },
+  } = useMainPageSearch({
     selectedCountry: values.country,
   });
 
@@ -30,7 +37,6 @@ const Component = ({ data }) => {
 
   const [inputCountry, setInputCountry] = useState("");
   const [inputStates, setInputStates] = useState("");
-  const [inputCompanies, setInputCompanies] = useState("");
 
   //USE-EFFECTS
   useEffect(() => {
@@ -49,83 +55,20 @@ const Component = ({ data }) => {
     setConfirmModalState(true);
   };
 
-  const getHighlightedText = (text, highlight) => {
-    const parts = text.split(new RegExp(`(${highlight})`, "gi"));
-    return (
-      <span>
-        {parts.map((part) =>
-          part.toLowerCase() === highlight.toLowerCase() ? <b>{part}</b> : part
-        )}
-      </span>
-    );
-  };
-
-  const renderOptionsFunction = ({
-    props,
-    option,
-    selected,
-    optionString,
-    inputText,
-  }) => {
-    return (
-      <li {...props}>
-        <Box
-          display={"flex"}
-          flexDirection={"row"}
-          // style={{ backgroundColor: selected ? "red" : "green" }}
-        >
-          <Box display={"flex"} ml={0} flexDirection={"column"}>
-            <Typography>
-              {getHighlightedText(optionString, inputText)}
-            </Typography>
-          </Box>
-        </Box>
-      </li>
-    );
-  };
   return (
     <form onSubmit={handleSubmit} className={styles.mainPage}>
       <div className={styles.mainPageContainer}>
         <div className={styles.mainPageContainer__firstBlock}>
           <div style={{ display: "flex" }}>
             {/*---COUNTRIES---*/}
-            <Autocomplete
-              disablePortal
-              options={countriesList}
-              getOptionLabel={(option) =>
-                `${option.attributes.name} ${option.attributes.code}`
-              }
-              fullWidth={true}
-              id="combo-box-demo"
-              loading={countriesList.length <= 0}
-              renderOption={(props, option, { selected }) => {
-                let optionString = `${option.attributes.name} ${option.attributes.code}`;
-                return renderOptionsFunction({
-                  props,
-                  option,
-                  selected,
-                  optionString,
-                  inputText: inputCountry,
-                });
-              }}
-              sx={stateVisibly ? { mr: "26px" } : {}}
-              onChange={(e, value) => setFieldValue("country", value)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  value={inputCountry}
-                  onChange={(event) => setInputCountry(event.target.value)}
-                  label="Select Country"
-                  variant="standard"
-                  required
-                  error={touched.country && Boolean(errors.country)}
-                  helperText={touched.fullName && errors.fullName}
-                />
-              )}
+            <CountriesAutocomplete
+              countriesList={setInputCountry}
+              inputCountry={inputCountry}
+              touched={touched}
+              setInputCountry={setInputCountry}
+              stateVisibly={stateVisibly}
             />
-
             {/*---STATES---*/}
-
             {stateVisibly && (
               <Autocomplete
                 disablePortal
@@ -180,31 +123,31 @@ const Component = ({ data }) => {
             disablePortal
             options={companiesList}
             getOptionLabel={(option) =>
-              `${option.attributes.names[0].localName} ${option.attributes.code}`
+              `${option.attributes.entity.legalName.name} `
             }
             fullWidth={true}
-            loading={companiesList.length <= 0}
+            // loading={companiesList.length <= 0}
+            loading={companies.loading}
             renderOption={(props, option, { selected }) => {
-              let optionString = `${option.attributes.names[0].localName} ${option.attributes.code}`;
+              let optionString = `${option.attributes.entity.legalName.name}`;
               return renderOptionsFunction({
                 props,
                 option,
                 selected,
                 optionString,
-                inputText: inputCompanies,
+                inputText: companies.value,
               });
             }}
             id="combo-box-demo"
-            onChange={(e, value) => setFieldValue("country", value)}
+            onChange={(e, value) => setFieldValue("company", value)}
             renderInput={(params) => (
               <TextField
                 {...params}
                 label="Legal entity name (start typing org name - autofill possible)"
                 variant="standard"
                 name={"companyText"}
-                value={inputCompanies}
-                // onChange={handleChange}
-                onChange={(event) => setInputCompanies(event.target.value)}
+                value={companies.value}
+                onChange={(event) => companies.handleChange(event.target.value)}
                 required
                 error={touched.companyText && Boolean(errors.companyText)}
                 helperText={touched.companyText && errors.companyText}

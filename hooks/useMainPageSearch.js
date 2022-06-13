@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { string } from "yup";
 
-const UseCountry = ({ selectedCountry }) => {
+const UseMainPageSearch = ({ selectedCountry }) => {
   const arrayCountriesWithState = ["CA", "US"];
 
   const [countriesList, setCountriesList] = useState([]);
+
+  //VALUES FOR SEARCH
+  const [companiesText, setCompaniesText] = useState("");
+  const [companiesLoading, setCompaniesLoading] = useState(false);
+
+  const handleChangeCompaniesText = (text) => {
+    setCompaniesText(text);
+  };
 
   useEffect(() => {
     axios
@@ -21,17 +30,29 @@ const UseCountry = ({ selectedCountry }) => {
   const [companiesList, setCompaniesList] = useState([]);
 
   useEffect(() => {
+    setCompaniesLoading(true);
     axios
-      .get(`https://api.gleif.org/api/v1/entity-legal-forms?page[size]=9999`, {
-        headers: {
-          Accept: "application/vnd.api+json",
-        },
-      })
+      // .get(`https://api.gleif.org/api/v1/entity-legal-forms?page[size]=9999`, {
+      .get(
+        `https://api.gleif.org/api/v1/lei-records${
+          !companiesText
+            ? `?page[number]=1&page[size]=35`
+            : `?filter[entity.legalName]=${companiesText}&page[number]=1&page[size]=35`
+        }`,
+        {
+          headers: {
+            Accept: "application/vnd.api+json",
+          },
+        }
+      )
       .then((elem) => {
         console.log("companies", elem.data.data);
         setCompaniesList(elem.data.data);
+      })
+      .finally(() => {
+        setCompaniesLoading(false);
       });
-  }, []);
+  }, [companiesText]);
 
   useEffect(() => {
     if (arrayCountriesWithState.includes(selectedCountry.id)) {
@@ -57,7 +78,18 @@ const UseCountry = ({ selectedCountry }) => {
   //   setCompanyText(companyTextInput);
   // }, [companyTextInput]);
 
-  return { countriesList, statesList, companiesList };
+  return {
+    countriesList,
+    statesList,
+    companiesList,
+    states: {
+      companies: {
+        handleChange: handleChangeCompaniesText,
+        value: companiesText,
+        loading: companiesLoading,
+      },
+    },
+  };
 };
 
-export default UseCountry;
+export default UseMainPageSearch;

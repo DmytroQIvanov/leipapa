@@ -6,7 +6,7 @@ const FormikWrapper = ({ children }) => {
   return (
     <Formik
       initialValues={{
-        country: "s",
+        country: "",
         fullName: "",
         email: "",
         typeOfEmployment: "",
