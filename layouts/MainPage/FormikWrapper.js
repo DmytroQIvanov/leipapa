@@ -8,8 +8,16 @@ const FormikWrapper = ({ children }) => {
       initialValues={{
         country: "",
         fullName: "",
+        legalEntityName: "",
         email: "",
+        companyNumber: "",
+        phoneNumber: "",
+        vatNumber: "",
         typeOfEmployment: "",
+        entityAddress: "",
+        city: "",
+        postalCode: "",
+
         companyName: "",
       }}
       validationSchema={MainPageSchema}

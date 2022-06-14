@@ -62,12 +62,16 @@ const Component = ({ data }) => {
           <div style={{ display: "flex" }}>
             {/*---COUNTRIES---*/}
             <CountriesAutocomplete
-              countriesList={setInputCountry}
-              inputCountry={inputCountry}
-              touched={touched}
-              setInputCountry={setInputCountry}
-              stateVisibly={stateVisibly}
+              {...{
+                countriesList,
+                inputCountry,
+                touched,
+                setInputCountry,
+                stateVisibly,
+                setFieldValue,
+              }}
             />
+
             {/*---STATES---*/}
             {stateVisibly && (
               <Autocomplete

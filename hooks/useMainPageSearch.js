@@ -29,6 +29,25 @@ const UseMainPageSearch = ({ selectedCountry }) => {
   const [statesList, setStatesList] = useState([]);
   const [companiesList, setCompaniesList] = useState([]);
 
+  // useEffect(() => {
+  //   axios
+  //     .post(
+  //       "https://apistaging.rapidlei.com/v1/leis/searchByKeyword",
+  //       JSON.stringify({
+  //         keyword: "hold",
+  //         legalJurisdiction: "GB",
+  //         entityType: "GENERAL",
+  //       }),
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization:
+  //             "Bearer PMAK-62a334814c44f23118257d31-34f5b03c6db5364abdc02cdf22db4f86bf",
+  //         },
+  //       }
+  //     )
+  //     .then((elem) => console.log(elem));
+  // }, []);
   useEffect(() => {
     setCompaniesLoading(true);
     axios
@@ -37,7 +56,7 @@ const UseMainPageSearch = ({ selectedCountry }) => {
         `https://api.gleif.org/api/v1/lei-records${
           !companiesText
             ? `?page[number]=1&page[size]=35`
-            : `?filter[entity.legalName]=${companiesText}&page[number]=1&page[size]=35`
+            : `?filter[entity.legalName]=${companiesText}&page[number]=1&page[size]=100`
         }`,
         {
           headers: {
@@ -70,6 +89,7 @@ const UseMainPageSearch = ({ selectedCountry }) => {
             elem.id.includes("US-")
           );
           setStatesList(result);
+          console.log(result);
         });
     }
   }, [selectedCountry]);
