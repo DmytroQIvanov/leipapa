@@ -126,14 +126,12 @@ const Component = ({ data }) => {
           <Autocomplete
             disablePortal
             options={companiesList}
-            getOptionLabel={(option) =>
-              `${option.attributes.entity.legalName.name} `
-            }
+            getOptionLabel={(option) => `${option.title} `}
             fullWidth={true}
             // loading={companiesList.length <= 0}
             loading={companies.loading}
             renderOption={(props, option, { selected }) => {
-              let optionString = `${option.attributes.entity.legalName.name}`;
+              let optionString = `${option.title}`;
               return renderOptionsFunction({
                 props,
                 option,

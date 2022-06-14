@@ -68,8 +68,8 @@ const UseMainPageSearch = ({ selectedCountry }) => {
         }
       )
       .then((elem) => {
-        console.log("companies", elem);
-        // setCompaniesList(elem.data.items);
+        console.log("companies", elem.data.items);
+        setCompaniesList(elem.data.items);
       })
       .finally(() => {
         setCompaniesLoading(false);
