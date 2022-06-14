@@ -25,18 +25,6 @@ const UseMainPageSearch = ({ selectedCountry }) => {
       });
   }, []);
 
-  useEffect(() => {
-    axios
-      .get(
-        "https://api-sandbox.company-information.service.gov.uk/search/companies?q=hold",
-        {
-          headers: {
-            Authorization: "Bearer a0a093ec-5597-40b6-94ec-967e8016c28a",
-          },
-        }
-      )
-      .then((elem) => console.log(elem));
-  }, []);
   // const [companyText, setCompanyText] = useState("");
   const [statesList, setStatesList] = useState([]);
   const [companiesList, setCompaniesList] = useState([]);
@@ -64,21 +52,24 @@ const UseMainPageSearch = ({ selectedCountry }) => {
     setCompaniesLoading(true);
     axios
       // .get(`https://api.gleif.org/api/v1/entity-legal-forms?page[size]=9999`, {
+      // .get(
+      //   `https://api.gleif.org/api/v1/lei-records${
+      //     !companiesText
+      //       ? `?page[number]=1&page[size]=35`
+      //       : `?filter[entity.legalName]=${companiesText}&page[number]=1&page[size]=100`
+      //   }`,
       .get(
-        `https://api.gleif.org/api/v1/lei-records${
-          !companiesText
-            ? `?page[number]=1&page[size]=35`
-            : `?filter[entity.legalName]=${companiesText}&page[number]=1&page[size]=100`
-        }`,
+        // `https://api.company-information.service.gov.uk/search/companies?q=${companiesText}`,
+        `https://api.company-information.service.gov.uk/search/companies?q=hold`,
         {
           headers: {
-            Accept: "application/vnd.api+json",
+            Authorization: "a0a093ec-5597-40b6-94ec-967e8016c28a",
           },
         }
       )
       .then((elem) => {
-        console.log("companies", elem.data.data);
-        setCompaniesList(elem.data.data);
+        console.log("companies", elem);
+        // setCompaniesList(elem.data.items);
       })
       .finally(() => {
         setCompaniesLoading(false);
