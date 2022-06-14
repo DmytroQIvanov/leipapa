@@ -59,8 +59,7 @@ const UseMainPageSearch = ({ selectedCountry }) => {
       //       : `?filter[entity.legalName]=${companiesText}&page[number]=1&page[size]=100`
       //   }`,
       .get(
-        // `https://api.company-information.service.gov.uk/search/companies?q=${companiesText}`,
-        `https://api.company-information.service.gov.uk/search/companies?q=hold`,
+        `https://api.company-information.service.gov.uk/search/companies?q=${companiesText}`,
         {
           headers: {
             Authorization: "a0a093ec-5597-40b6-94ec-967e8016c28a",
