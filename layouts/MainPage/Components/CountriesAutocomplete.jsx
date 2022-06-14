@@ -9,6 +9,7 @@ const CountriesAutocomplete = ({
   setInputCountry,
   touched,
   setFieldValue,
+  errors,
 }) => {
   return (
     <Autocomplete

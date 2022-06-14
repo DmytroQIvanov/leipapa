@@ -4,32 +4,31 @@ import {
   FormControl,
   FormHelperText,
   Input,
-  InputLabel, TextField,
+  InputLabel,
+  TextField,
   Typography,
 } from "@mui/material";
 import styles from "./CustomInput.module.scss";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 
 const Index = ({
-                 label,
-
+  label,
   required,
   value,
   onChange,
   error,
   subTitle,
   fullWidth = true,
-    width,
+  width,
   questionLink,
-    type='input',
+  type = "input",
   ...other
 }) => {
-
-  const Component =()=>{
-
+  const Component = () => {
     switch (type) {
-      case 'input':
-        return <Input
+      case "input":
+        return (
+          <Input
             id="my-input"
             aria-describedby="my-helper-text"
             required={required}
@@ -37,17 +36,21 @@ const Index = ({
             onChange={onChange}
             error={error}
             {...other}
-        />;
-      case 'textField':
-        return <TextField
+          />
+        );
+      case "textField":
+        return (
+          <TextField
             required={required}
             value={value}
             onChange={onChange}
             error={error}
             {...other}
-        />
+          />
+        );
       default:
-        return <Input
+        return (
+          <Input
             id="my-input"
             aria-describedby="my-helper-text"
             required={required}
@@ -55,13 +58,13 @@ const Index = ({
             onChange={onChange}
             error={error}
             {...other}
-        />;
+          />
+        );
     }
-
-  }
+  };
   return (
-    <div style={{ position: "relative" }} className={'customInput'}>
-      <FormControl fullWidth={fullWidth} sx={{width}}>
+    <div style={{ position: "relative" }} className={"customInput"}>
+      <FormControl fullWidth={fullWidth} sx={{ width }}>
         <InputLabel style={{ left: "-14px" }}>
           <Box sx={{ display: "flex" }}>
             {label}

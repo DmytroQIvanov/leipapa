@@ -69,6 +69,7 @@ const Component = ({ data }) => {
                 setInputCountry,
                 stateVisibly,
                 setFieldValue,
+                errors,
               }}
             />
 
@@ -103,7 +104,7 @@ const Component = ({ data }) => {
                     variant="standard"
                     required
                     error={touched.states && Boolean(errors.states)}
-                    helperText={touched.fullName && errors.fullName}
+                    helperText={touched.states && errors.states}
                   />
                 )}
               />
@@ -113,22 +114,20 @@ const Component = ({ data }) => {
             label={"Application first and last name"}
             required
             questionLink={"smth"}
-            name={"email"}
+            name={"fullName"}
             variant="standard"
             size={"medium"}
-            value={values.email}
+            value={values.fullName}
             onChange={handleChange}
             error={touched.fullName && errors.fullName}
             helperText={touched.fullName && errors.fullName}
           />
-
           {/*---Companies---*/}
           <Autocomplete
             disablePortal
             options={companiesList}
-            getOptionLabel={(option) => `${option.title} `}
+            getOptionLabel={(option) => `${option.title}`}
             fullWidth={true}
-            // loading={companiesList.length <= 0}
             loading={companies.loading}
             renderOption={(props, option, { selected }) => {
               let optionString = `${option.title}`;
@@ -141,7 +140,13 @@ const Component = ({ data }) => {
               });
             }}
             id="combo-box-demo"
-            onChange={(e, value) => setFieldValue("company", value)}
+            onChange={(e, value) => {
+              setFieldValue("company", value);
+              setFieldValue("entityAddress", value.address_snippet);
+              setFieldValue("entityCity", value.address.locality);
+              setFieldValue("entityPostalCode", value.address.postal_code);
+              console.log(value);
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -151,8 +156,9 @@ const Component = ({ data }) => {
                 value={companies.value}
                 onChange={(event) => companies.handleChange(event.target.value)}
                 required
-                error={touched.companyText && Boolean(errors.companyText)}
-                helperText={touched.companyText && errors.companyText}
+                error={touched.company && errors.company}
+                // error={touched.companyText && Boolean(errors.companyText)}
+                // helperText={touched.companyText && errors.companyText}
               />
             )}
           />
@@ -162,11 +168,19 @@ const Component = ({ data }) => {
             name={"email"}
             type={"email"}
             subTitle={"Add another e-mail"}
+            value={values.email}
+            onChange={handleChange}
+            error={touched.email && errors.email}
+            helperText={touched.email && errors.email}
           />
           <CustomInput
             label="Company number / Registration ID"
             questionLink={"smth"}
             required
+            name={"companyNumber"}
+            value={values.companyNumber}
+            onChange={handleChange}
+            error={touched.companyNumber && errors.companyNumber}
           />
           <CustomInput label="Phone number" />
           <CustomInput label="Vat number, if applicable (E.G. GB 999 999 999 999)" />
