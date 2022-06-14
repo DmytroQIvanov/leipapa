@@ -5,11 +5,16 @@ import {
   FormHelperText,
   Input,
   InputLabel,
+  Popper,
   TextField,
   Typography,
 } from "@mui/material";
 import styles from "./CustomInput.module.scss";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+
+import Backdrop from "@mui/material/Backdrop";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
 
 const Index = ({
   label,
@@ -24,6 +29,22 @@ const Index = ({
   type = "input",
   ...other
 }) => {
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const Component = () => {
     switch (type) {
       case "input":
@@ -75,8 +96,17 @@ const Index = ({
         </InputLabel>
         {Component()}
         {questionLink && (
-          <HelpOutlineOutlinedIcon className={styles.helpOutlineOutlinedIcon} />
+          <Box onClick={handleOpen}>
+            <HelpOutlineOutlinedIcon
+              className={styles.helpOutlineOutlinedIcon}
+            />
+          </Box>
         )}
+        <Popper open={open} sx={{ background: "red" }}>
+          <Box sx={{ border: 1, p: 1, bgcolor: "background.paper" }}>
+            The content of the Popper.
+          </Box>
+        </Popper>
         {error && (
           <FormHelperText id="my-helper-text" className={styles.error}>
             {error}

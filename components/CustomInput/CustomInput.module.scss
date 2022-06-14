@@ -1,11 +1,11 @@
 $blueColor:#4141c9;
 @mixin CommonSub {
   position: absolute;
-  bottom: -34px;
+  bottom: -24px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
-  left: -14;
+  left: -14px;
   font-family: Arial;
 }
 
@@ -17,7 +17,7 @@ $blueColor:#4141c9;
 }
 .error {
   @include CommonSub;
-  color: #a90c0c;
+  color: #a41f1f;
   cursor: default;
 }
 .helpOutlineOutlinedIcon{

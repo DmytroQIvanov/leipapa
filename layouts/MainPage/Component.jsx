@@ -16,6 +16,7 @@ import CustomRadioButtonsGroup from "../../components/CustomRadioButtons";
 import ConfirmModal from "../../components/ConfirmModal";
 import CountriesAutocomplete from "./Components/CountriesAutocomplete";
 import { renderOptionsFunction } from "./Functions/renderOptionsFunction";
+import CustomCheckBox from "../../components/CustomCheckBox";
 
 const Component = ({ data }) => {
   //HOOKS
@@ -145,7 +146,6 @@ const Component = ({ data }) => {
               setFieldValue("entityAddress", value.address_snippet);
               setFieldValue("entityCity", value.address.locality);
               setFieldValue("entityPostalCode", value.address.postal_code);
-              console.log(value);
             }}
             renderInput={(params) => (
               <TextField
@@ -157,8 +157,6 @@ const Component = ({ data }) => {
                 onChange={(event) => companies.handleChange(event.target.value)}
                 required
                 error={touched.company && errors.company}
-                // error={touched.companyText && Boolean(errors.companyText)}
-                // helperText={touched.companyText && errors.companyText}
               />
             )}
           />
@@ -236,13 +234,12 @@ const Component = ({ data }) => {
           label={"Is the company owned be another company? (>50%)"}
           required
         />
-        <FormControlLabel
-          value="end"
-          className={styles.mainPageContainer__secondBlockTerms}
-          control={<Checkbox />}
-          label="*I here by accept the Terms & Conditions of LEI Register and give permission to apply for an LEI"
-          sx={{ color: "#989898" }}
-          labelPlacement="*I here by accept the Terms & Conditions of LEI Register and give permission to apply for an LEI"
+        <CustomCheckBox
+          name={"acceptTerms"}
+          value={values.acceptTerms}
+          onChange={handleChange}
+          error={touched.acceptTerms && errors.acceptTerms}
+          formikData={data}
         />
         <Box sx={{ display: "flex" }}>
           <Button

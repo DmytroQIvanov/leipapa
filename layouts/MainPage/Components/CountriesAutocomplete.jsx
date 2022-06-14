@@ -19,7 +19,6 @@ const CountriesAutocomplete = ({
         `${option.attributes.name} ${option.attributes.code}`
       }
       fullWidth={true}
-      id="combo-box-demo"
       loading={countriesList.length <= 0}
       renderOption={(props, option, { selected }) => {
         let optionString = `${option.attributes.name} ${option.attributes.code}`;

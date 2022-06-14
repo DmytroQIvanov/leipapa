@@ -15,9 +15,10 @@ const FormikWrapper = ({ children }) => {
         vatNumber: "",
         typeOfEmployment: "",
         entityAddress: "",
-        city: "",
-        postalCode: "",
+        entityCity: "",
+        entityPostalCode: "",
 
+        acceptTerms: false,
         companyName: "",
       }}
       validationSchema={MainPageSchema}
