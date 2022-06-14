@@ -28,7 +28,7 @@ const UseMainPageSearch = ({ selectedCountry }) => {
   useEffect(() => {
     axios
       .get(
-        "https://api.company-information.service.gov.uk/search/companies?q=hold",
+        "https://api-sandbox.company-information.service.gov.uk/search/companies?q=hold",
         {
           headers: {
             Authorization: "Bearer a0a093ec-5597-40b6-94ec-967e8016c28a",
