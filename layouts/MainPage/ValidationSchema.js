@@ -16,6 +16,7 @@ export const MainPageSchema = Yup.object({
   ),
 
   acceptTerms: Yup.bool().oneOf([true], "Field must be checked"),
+  weMayContact: Yup.bool().oneOf([true], "Field must be checked"),
 
   entityAddress: Yup.string()
     .min(3)
@@ -27,10 +28,16 @@ export const MainPageSchema = Yup.object({
     .max(10)
     .required("Entity Postal Code required"),
 
-  // entityCity: Yup.string().min(1).max(10).required("Entity city is required"),
-
-  // entityPostalCode: Yup.string()
-  //   .min(1)
-  //   .max(10)
-  //   .required("Entity Postal Code is required"),
+  headquartersAddress: Yup.string()
+    .min(3)
+    .max(10)
+    .required("Entity address required"),
+  headquartersCity: Yup.string()
+    .min(3)
+    .max(10)
+    .required("Entity City required"),
+  headquartersPostalCode: Yup.string()
+    .min(3)
+    .max(10)
+    .required("Entity Postal Code required"),
 });

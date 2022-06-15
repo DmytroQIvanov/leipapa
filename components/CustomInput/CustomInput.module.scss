@@ -13,7 +13,7 @@ $blueColor:#4141c9;
   @include CommonSub;
   right: -12px;
   text-align: right;
-  color: $blueColor;
+  color: #4141c9;
 }
 .error {
   @include CommonSub;
@@ -21,10 +21,9 @@ $blueColor:#4141c9;
   cursor: default;
 }
 .helpOutlineOutlinedIcon{
-
   position: absolute;
   right: 0px;
   bottom: 8px;
   cursor: pointer;
-  fill: $blueColor;
+  fill: #4141c9;
 }

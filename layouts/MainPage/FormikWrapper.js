@@ -18,7 +18,15 @@ const FormikWrapper = ({ children }) => {
         entityCity: "",
         entityPostalCode: "",
 
+        headquartesAddress: true,
+        headquartersAddress: "",
+        headquartersCity: "",
+        headquartersPostalCode: "",
+        parentConsolidate: false,
+        companyUltimate: false,
+        companyOwned: false,
         acceptTerms: false,
+        weMayContact: false,
         companyName: "",
       }}
       validationSchema={MainPageSchema}

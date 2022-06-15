@@ -104,12 +104,10 @@ const Index = ({
           </Box>
         </Popper>
         {error && (
-          <FormHelperText id="my-helper-text" className={styles.error}>
-            {error}
-          </FormHelperText>
+          <FormHelperText className={styles.error}>{error}</FormHelperText>
         )}
         {subTitle && (
-          <FormHelperText className={styles.subtitle} id="my-helper-text">
+          <FormHelperText className={styles.subtitle}>
             {subTitle}
           </FormHelperText>
         )}

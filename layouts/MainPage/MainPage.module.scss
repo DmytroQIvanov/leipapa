@@ -12,10 +12,10 @@
       margin-bottom: 20px;
     }
     &__secondBlock {
-      display: flex;
-      flex-direction: column;
-      width: 400px;
-      gap: 34px;
+      display: grid;
+      grid-template:
+            "1fr 1fr";
+      gap: 50px 140px;
       margin-bottom: 20px;
       &Terms{
 

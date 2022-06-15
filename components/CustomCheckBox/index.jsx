@@ -19,9 +19,8 @@ const Index = ({
     <FormControlLabel
       value="end"
       control={<Checkbox checked={value} onChange={handleChange} />}
-      label="*I here by accept the Terms & Conditions of LEI Register and give permission to apply for an LEI"
+      label={label}
       className={error ? styles.checkBox_error : styles.checkBox_default}
-      labelPlacement="*I here by accept the Terms & Conditions of LEI Register and give permission to apply for an LEI"
     />
   );
 };
