@@ -173,7 +173,7 @@ const Component = ({ data }) => {
             id="combo-box-demo"
             onChange={(e, value) => {
               setFieldValue("company", value);
-              setFieldValue("entityAddress", value.address_snippet);
+              setFieldValue("entityAddress", value.address_line_1);
               setFieldValue("entityCity", value.address.locality);
               setFieldValue("entityPostalCode", value.address.postal_code);
               setFieldValue("companyNumber", value.company_number);
@@ -336,6 +336,7 @@ const Component = ({ data }) => {
               <SelectableBlock
                 handleChange={(elem) => setFieldValue("companyUltimate", elem)}
                 label={"Is the parent company ultimate consolidation parent?"}
+                value={values.companyUltimate}
               />
               <Typography sx={{ color: "#969696", pb: "20px" }}>
                 Answer YES if the parent entity is the ultimate consolidating
@@ -408,17 +409,19 @@ const Component = ({ data }) => {
                   error={touched.headquartersCity && errors.headquartersCity}
                 />
                 <CustomInput
-                  label={
+                  inputLabel={
                     "Accounting period starting from (which has been filed the latest)"
                   }
                   name={"entityCity"}
+                  type={"date"}
                   required
                   value={values.headquartersCity}
                   onChange={handleChange}
                   error={touched.headquartersCity && errors.headquartersCity}
                 />
                 <CustomInput
-                  label={"Accounting period to "}
+                  inputLabel={"Accounting period to "}
+                  type={"date"}
                   name={"entityCity"}
                   required
                   value={values.headquartersCity}
@@ -426,8 +429,9 @@ const Component = ({ data }) => {
                   error={touched.headquartersCity && errors.headquartersCity}
                 />
                 <CustomInput
-                  label={"Relationship period from"}
+                  inputLabel={"Relationship period from"}
                   name={"entityCity"}
+                  type={"date"}
                   required
                   value={values.headquartersCity}
                   onChange={handleChange}
@@ -439,104 +443,109 @@ const Component = ({ data }) => {
                 </Typography>
                 <input type={"file"} />
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "30px",
-                  mb: "20px",
-                }}
-              >
-                <Typography>
-                  Information about direct parent companys
-                </Typography>
-                <Typography>
-                  NB! Validating parental data (Level 2) costs additional 10€
-                  per parent per year. Validation can take up to 48h. A complete
-                  LEI record consists of both Level 1 and Level 2 data. A legal
-                  entity is obliged to provide Level 2 data if it is available
-                  to them. If not, you can select an exception by clicking ‘NO’.
-                </Typography>
+              {!values.companyUltimate ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "30px",
+                    mb: "20px",
+                  }}
+                >
+                  <Typography>
+                    Information about direct parent companys
+                  </Typography>
+                  <Typography>
+                    NB! Validating parental data (Level 2) costs additional 10€
+                    per parent per year. Validation can take up to 48h. A
+                    complete LEI record consists of both Level 1 and Level 2
+                    data. A legal entity is obliged to provide Level 2 data if
+                    it is available to them. If not, you can select an exception
+                    by clicking ‘NO’.
+                  </Typography>
 
-                <SelectableBlock
-                  width={"100%"}
-                  handleChange={(elem) =>
-                    setFieldValue("companyUltimate", elem)
-                  }
-                  value={values.companyUltimate}
-                />
-                <CustomInput
-                  label={"Parent company name"}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  label={"Company number / Registration ID "}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  label={"Entity address"}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  label={"City"}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  label={"Postal code"}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  label={
-                    "Accounting period starting from (which has been filed the latest)"
-                  }
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  label={"Accounting period to "}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  label={"Relationship period from"}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <Typography>
-                  Upload the parent’s latest consolidated financial statement to
-                  prove the relationship.{" "}
-                </Typography>
-                <input type={"file"} />
-              </Box>
+                  <SelectableBlock
+                    width={"100%"}
+                    handleChange={(elem) =>
+                      setFieldValue("companyUltimate", elem)
+                    }
+                    value={values.companyUltimate}
+                  />
+                  <CustomInput
+                    label={"Parent company name"}
+                    name={"entityCity"}
+                    required
+                    value={values.headquartersCity}
+                    onChange={handleChange}
+                    error={touched.headquartersCity && errors.headquartersCity}
+                  />
+                  <CustomInput
+                    label={"Company number / Registration ID "}
+                    name={"entityCity"}
+                    required
+                    value={values.headquartersCity}
+                    onChange={handleChange}
+                    error={touched.headquartersCity && errors.headquartersCity}
+                  />
+                  <CustomInput
+                    label={"Entity address"}
+                    name={"entityCity"}
+                    required
+                    value={values.headquartersCity}
+                    onChange={handleChange}
+                    error={touched.headquartersCity && errors.headquartersCity}
+                  />
+                  <CustomInput
+                    label={"City"}
+                    name={"entityCity"}
+                    required
+                    value={values.headquartersCity}
+                    onChange={handleChange}
+                    error={touched.headquartersCity && errors.headquartersCity}
+                  />
+                  <CustomInput
+                    label={"Postal code"}
+                    name={"entityCity"}
+                    required
+                    value={values.headquartersCity}
+                    onChange={handleChange}
+                    error={touched.headquartersCity && errors.headquartersCity}
+                  />
+                  <CustomInput
+                    label={
+                      "Accounting period starting from (which has been filed the latest)"
+                    }
+                    name={"entityCity"}
+                    required
+                    value={values.headquartersCity}
+                    onChange={handleChange}
+                    error={touched.headquartersCity && errors.headquartersCity}
+                  />
+                  <CustomInput
+                    label={"Accounting period to "}
+                    name={"entityCity"}
+                    required
+                    value={values.headquartersCity}
+                    onChange={handleChange}
+                    error={touched.headquartersCity && errors.headquartersCity}
+                  />
+                  <CustomInput
+                    label={"Relationship period from"}
+                    name={"entityCity"}
+                    required
+                    value={values.headquartersCity}
+                    onChange={handleChange}
+                    error={touched.headquartersCity && errors.headquartersCity}
+                  />
+                  <Typography>
+                    Upload the parent’s latest consolidated financial statement
+                    to prove the relationship.{" "}
+                  </Typography>
+                  <input type={"file"} />
+                </Box>
+              ) : (
+                <></>
+              )}
             </Box>
           </>
         )}

@@ -11,9 +11,13 @@ import {
 } from "@mui/material";
 import styles from "./CustomInput.module.scss";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const Index = ({
   label,
+  inputLabel,
   required,
   value,
   onChange,
@@ -52,6 +56,7 @@ const Index = ({
             value={value}
             onChange={onChange}
             error={error}
+            autocomplete="off"
             {...other}
           />
         );
@@ -64,6 +69,18 @@ const Index = ({
             error={error}
             {...other}
           />
+        );
+      case "date":
+        return (
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DesktopDatePicker
+              label={inputLabel}
+              inputFormat="MM/dd/yyyy"
+              // value={value}
+              onChange={() => {}}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
         );
       default:
         return (

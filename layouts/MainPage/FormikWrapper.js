@@ -23,7 +23,7 @@ const FormikWrapper = ({ children }) => {
         headquartersCity: "",
         headquartersPostalCode: "",
         parentConsolidate: false,
-        companyUltimate: false,
+        companyUltimate: true,
         companyOwned: false,
         acceptTerms: false,
         weMayContact: false,
