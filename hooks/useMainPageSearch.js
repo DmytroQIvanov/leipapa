@@ -71,23 +71,25 @@ const UseMainPageSearch = ({ values }) => {
   }, [values.country]);
 
   useEffect(() => {
-    setCompaniesOfficersLoading(true);
-    axios
-      .get(
-        `https://api.company-information.service.gov.uk/company/${values.company.company_number}/officers`,
-        {
-          headers: {
-            Authorization: "a0a093ec-5597-40b6-94ec-967e8016c28a",
-          },
-        }
-      )
-      .then((elem) => {
-        console.log("officers", elem.data.items);
-        setCompaniesOfficersList(elem.data.items);
-      })
-      .finally(() => {
-        setCompaniesOfficersLoading(false);
-      });
+    if (values.company) {
+      setCompaniesOfficersLoading(true);
+      axios
+        .get(
+          `https://api.company-information.service.gov.uk/company/${values.company.company_number}/officers`,
+          {
+            headers: {
+              Authorization: "a0a093ec-5597-40b6-94ec-967e8016c28a",
+            },
+          }
+        )
+        .then((elem) => {
+          console.log("officers", elem.data.items);
+          setCompaniesOfficersList(elem.data.items);
+        })
+        .finally(() => {
+          setCompaniesOfficersLoading(false);
+        });
+    }
   }, [values.company]);
 
   return {
