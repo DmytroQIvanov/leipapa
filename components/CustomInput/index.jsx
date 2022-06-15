@@ -12,10 +12,6 @@ import {
 import styles from "./CustomInput.module.scss";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 
-import Backdrop from "@mui/material/Backdrop";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-
 const Index = ({
   label,
   required,

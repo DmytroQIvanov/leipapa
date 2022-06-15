@@ -3,8 +3,6 @@ import {
   Autocomplete,
   Box,
   Button,
-  Checkbox,
-  FormControlLabel,
   TextField,
   Typography,
 } from "@mui/material";
@@ -26,9 +24,9 @@ const Component = ({ data }) => {
     countriesList,
     statesList,
     companiesList,
-    states: { companies },
+    states: { companies, company },
   } = useMainPageSearch({
-    selectedCountry: values.country,
+    values,
   });
 
   //STATES
@@ -38,6 +36,7 @@ const Component = ({ data }) => {
 
   const [inputCountry, setInputCountry] = useState("");
   const [inputStates, setInputStates] = useState("");
+  const [inputFullName, setInputFullName] = useState("");
 
   //USE-EFFECTS
   useEffect(() => {
@@ -111,17 +110,48 @@ const Component = ({ data }) => {
               />
             )}
           </div>
-          <CustomInput
-            label={"Application first and last name"}
-            required
-            questionLink={"smth"}
-            name={"fullName"}
-            variant="standard"
-            size={"medium"}
-            value={values.fullName}
-            onChange={handleChange}
-            error={touched.fullName && errors.fullName}
-            helperText={touched.fullName && errors.fullName}
+          {/*<CustomInput*/}
+          {/*  label={"Application first and last name"}*/}
+          {/*  required*/}
+          {/*  questionLink={"smth"}*/}
+          {/*  name={"fullName"}*/}
+          {/*  variant="standard"*/}
+          {/*  size={"medium"}*/}
+          {/*  value={values.fullName}*/}
+          {/*  onChange={handleChange}*/}
+          {/*  error={touched.fullName && errors.fullName}*/}
+          {/*  helperText={touched.fullName && errors.fullName}*/}
+          {/*/>*/}
+          <Autocomplete
+            disablePortal
+            options={company.officers.list}
+            getOptionLabel={(option) => `${option.name}`}
+            fullWidth={true}
+            loading={company.officers.loading}
+            renderOption={(props, option, { selected }) => {
+              let optionString = `${option.name}`;
+              return renderOptionsFunction({
+                props,
+                option,
+                selected,
+                optionString,
+                inputText: inputFullName,
+              });
+            }}
+            onChange={(e, value) => {
+              setFieldValue("officerFullName", value);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Application first and last name"
+                variant="standard"
+                required
+                value={inputFullName}
+                onChange={(event) => setInputFullName(event.target.value)}
+                error={touched.company && errors.company}
+              />
+            )}
           />
           {/*---Companies---*/}
           <Autocomplete
@@ -146,6 +176,7 @@ const Component = ({ data }) => {
               setFieldValue("entityAddress", value.address_snippet);
               setFieldValue("entityCity", value.address.locality);
               setFieldValue("entityPostalCode", value.address.postal_code);
+              setFieldValue("companyNumber", value.company_number);
             }}
             renderInput={(params) => (
               <TextField
