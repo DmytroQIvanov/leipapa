@@ -29,6 +29,8 @@
       }
       &__secondBlock {
         width: 100%;
+        grid-template:
+            "1fr";
         &Terms{
           //font-size: 13px!important;
           span{

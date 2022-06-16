@@ -16,6 +16,45 @@ import CountriesAutocomplete from "./Components/CountriesAutocomplete";
 import { renderOptionsFunction } from "./Functions/renderOptionsFunction";
 import CustomCheckBox from "../../components/CustomCheckBox";
 
+const radioButtonsArray = [
+  {
+    value: "1d",
+    label:
+      "Natural Persons: There is no parent entity according to the definition used because the entity is controlled by the natural person or persons without any intermediate legal entity meeting the definition of accounting consolidating parent. ",
+  },
+  {
+    value: "2d",
+    label:
+      "Non Consolidating: There is no parent according to the definition used, because the entity is controlled by legal entities not subject to preparing consolidated financial statements.",
+  },
+  {
+    value: "3d",
+    label:
+      "No Known Person: There is no parent according to the definition used in the Legal Entity Identifier Foundation because there is no known person controlling the entity (e.g., diversified shareholding). ",
+  },
+  {
+    value: "4d",
+    label:
+      "Legal Obstacles: Obstacles in the laws or regulations of a jurisdiction prevent providing or publishing this information. The entity can not publish a parent entity in the Global LEI number database. ",
+  },
+  {
+    value: "5d",
+    label:
+      "Binding Legal Commitments: Binding legal commitments (other than the laws or regulations of a jurisdiction), such as articles governing the legal entity or a contract, prevent providing or publishing this information. ",
+  },
+  {
+    value: "6d",
+    label:
+      "Detriment Not Excluded: The child entity has sought to consult the parent entity about the reporting of the parent information but could not confirm the absence of detriment in a way that can appropriately prevent liability risks for the child entity. ",
+  },
+
+  {
+    value: "7d",
+    label:
+      "Disclosure Detrimental: The disclosure of this information would be detrimental to the legal entity or the relevant parent. This will include reasons generally accepted by public authorities in similar circumstances, based on a declaration by the entity",
+  },
+];
+
 const Component = ({ data }) => {
   //HOOKS
   const { values, touched, errors, handleSubmit, handleChange, setFieldValue } =
@@ -350,6 +389,8 @@ const Component = ({ data }) => {
                   flexDirection: "column",
                   gap: "30px",
                   mb: "20px",
+                  minWidth: "38vw",
+                  maxWidth: "38vw",
                 }}
               >
                 <Typography>Information about direct parent company</Typography>
@@ -363,85 +404,121 @@ const Component = ({ data }) => {
 
                 <SelectableBlock
                   handleChange={(elem) =>
-                    setFieldValue("companyUltimate", elem)
+                    setFieldValue("directParentCompany", elem)
                   }
-                  value={values.companyUltimate}
+                  value={values.directParentCompany}
                   width={"100%"}
                 />
-                <CustomInput
-                  label={"Parent company name"}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  label={"Company number / Registration ID "}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  label={"Entity address"}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  label={"City"}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  label={"Postal code"}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  inputLabel={
-                    "Accounting period starting from (which has been filed the latest)"
-                  }
-                  name={"entityCity"}
-                  type={"date"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  inputLabel={"Accounting period to "}
-                  type={"date"}
-                  name={"entityCity"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <CustomInput
-                  inputLabel={"Relationship period from"}
-                  name={"entityCity"}
-                  type={"date"}
-                  required
-                  value={values.headquartersCity}
-                  onChange={handleChange}
-                  error={touched.headquartersCity && errors.headquartersCity}
-                />
-                <Typography>
-                  Upload the parent’s latest consolidated financial statement to
-                  prove the relationship.{" "}
-                </Typography>
-                <input type={"file"} />
+                {values.directParentCompany ? (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "30px",
+                      mb: "20px",
+                    }}
+                  >
+                    <CustomInput
+                      label={"Parent company name"}
+                      name={"entityCity"}
+                      required
+                      value={values.headquartersCity}
+                      onChange={handleChange}
+                      error={
+                        touched.headquartersCity && errors.headquartersCity
+                      }
+                    />
+                    <CustomInput
+                      label={"Company number / Registration ID "}
+                      name={"entityCity"}
+                      required
+                      value={values.headquartersCity}
+                      onChange={handleChange}
+                      error={
+                        touched.headquartersCity && errors.headquartersCity
+                      }
+                    />
+                    <CustomInput
+                      label={"Entity address"}
+                      name={"entityCity"}
+                      required
+                      value={values.headquartersCity}
+                      onChange={handleChange}
+                      error={
+                        touched.headquartersCity && errors.headquartersCity
+                      }
+                    />
+                    <CustomInput
+                      label={"City"}
+                      name={"entityCity"}
+                      required
+                      value={values.headquartersCity}
+                      onChange={handleChange}
+                      error={
+                        touched.headquartersCity && errors.headquartersCity
+                      }
+                    />
+                    <CustomInput
+                      label={"Postal code"}
+                      name={"entityCity"}
+                      required
+                      value={values.headquartersCity}
+                      onChange={handleChange}
+                      error={
+                        touched.headquartersCity && errors.headquartersCity
+                      }
+                    />
+                    <CustomInput
+                      inputLabel={
+                        "Accounting period starting from (which has been filed the latest)"
+                      }
+                      name={"entityCity"}
+                      type={"date"}
+                      required
+                      value={values.headquartersCity}
+                      onChange={handleChange}
+                      error={
+                        touched.headquartersCity && errors.headquartersCity
+                      }
+                    />
+                    <CustomInput
+                      inputLabel={"Accounting period to "}
+                      type={"date"}
+                      name={"entityCity"}
+                      required
+                      value={values.headquartersCity}
+                      onChange={handleChange}
+                      error={
+                        touched.headquartersCity && errors.headquartersCity
+                      }
+                    />
+                    <CustomInput
+                      inputLabel={"Relationship period from"}
+                      name={"entityCity"}
+                      type={"date"}
+                      required
+                      value={values.headquartersCity}
+                      onChange={handleChange}
+                      error={
+                        touched.headquartersCity && errors.headquartersCity
+                      }
+                    />
+                    <Typography>
+                      Upload the parent’s latest consolidated financial
+                      statement to prove the relationship.{" "}
+                    </Typography>
+                    <input type={"file"} />
+                  </Box>
+                ) : (
+                  <Box>
+                    <Typography>Reason for not providing details *</Typography>
+                    <CustomRadioButtonsGroup
+                      flexDirection={"column"}
+                      value={"smth"}
+                      buttonsArray={radioButtonsArray}
+                    />
+                  </Box>
+                )}
               </Box>
               {!values.companyUltimate ? (
                 <Box
@@ -450,6 +527,8 @@ const Component = ({ data }) => {
                     flexDirection: "column",
                     gap: "30px",
                     mb: "20px",
+                    minWidth: "40vw",
+                    maxWidth: "40vw",
                   }}
                 >
                   <Typography>
@@ -463,85 +542,124 @@ const Component = ({ data }) => {
                     it is available to them. If not, you can select an exception
                     by clicking ‘NO’.
                   </Typography>
-
                   <SelectableBlock
                     width={"100%"}
                     handleChange={(elem) =>
-                      setFieldValue("companyUltimate", elem)
+                      setFieldValue("informationDirectParentCompany", elem)
                     }
-                    value={values.companyUltimate}
+                    value={values.informationDirectParentCompany}
                   />
-                  <CustomInput
-                    label={"Parent company name"}
-                    name={"entityCity"}
-                    required
-                    value={values.headquartersCity}
-                    onChange={handleChange}
-                    error={touched.headquartersCity && errors.headquartersCity}
-                  />
-                  <CustomInput
-                    label={"Company number / Registration ID "}
-                    name={"entityCity"}
-                    required
-                    value={values.headquartersCity}
-                    onChange={handleChange}
-                    error={touched.headquartersCity && errors.headquartersCity}
-                  />
-                  <CustomInput
-                    label={"Entity address"}
-                    name={"entityCity"}
-                    required
-                    value={values.headquartersCity}
-                    onChange={handleChange}
-                    error={touched.headquartersCity && errors.headquartersCity}
-                  />
-                  <CustomInput
-                    label={"City"}
-                    name={"entityCity"}
-                    required
-                    value={values.headquartersCity}
-                    onChange={handleChange}
-                    error={touched.headquartersCity && errors.headquartersCity}
-                  />
-                  <CustomInput
-                    label={"Postal code"}
-                    name={"entityCity"}
-                    required
-                    value={values.headquartersCity}
-                    onChange={handleChange}
-                    error={touched.headquartersCity && errors.headquartersCity}
-                  />
-                  <CustomInput
-                    label={
-                      "Accounting period starting from (which has been filed the latest)"
-                    }
-                    name={"entityCity"}
-                    required
-                    value={values.headquartersCity}
-                    onChange={handleChange}
-                    error={touched.headquartersCity && errors.headquartersCity}
-                  />
-                  <CustomInput
-                    label={"Accounting period to "}
-                    name={"entityCity"}
-                    required
-                    value={values.headquartersCity}
-                    onChange={handleChange}
-                    error={touched.headquartersCity && errors.headquartersCity}
-                  />
-                  <CustomInput
-                    label={"Relationship period from"}
-                    name={"entityCity"}
-                    required
-                    value={values.headquartersCity}
-                    onChange={handleChange}
-                    error={touched.headquartersCity && errors.headquartersCity}
-                  />
-                  <Typography>
-                    Upload the parent’s latest consolidated financial statement
-                    to prove the relationship.{" "}
-                  </Typography>
-                  <input type={"file"} />
+                  {values.informationDirectParentCompany ? (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "30px",
+                        mb: "20px",
+                        minWidth: "40vw",
+                        maxWidth: "40vw",
+                      }}
+                    >
+                      <CustomInput
+                        label={"Parent company name"}
+                        name={"entityCity"}
+                        required
+                        value={values.headquartersCity}
+                        onChange={handleChange}
+                        error={
+                          touched.headquartersCity && errors.headquartersCity
+                        }
+                      />
+                      <CustomInput
+                        label={"Company number / Registration ID "}
+                        name={"entityCity"}
+                        required
+                        value={values.headquartersCity}
+                        onChange={handleChange}
+                        error={
+                          touched.headquartersCity && errors.headquartersCity
+                        }
+                      />
+                      <CustomInput
+                        label={"Entity address"}
+                        name={"entityCity"}
+                        required
+                        value={values.headquartersCity}
+                        onChange={handleChange}
+                        error={
+                          touched.headquartersCity && errors.headquartersCity
+                        }
+                      />
+                      <CustomInput
+                        label={"City"}
+                        name={"entityCity"}
+                        required
+                        value={values.headquartersCity}
+                        onChange={handleChange}
+                        error={
+                          touched.headquartersCity && errors.headquartersCity
+                        }
+                      />
+                      <CustomInput
+                        label={"Postal code"}
+                        name={"entityCity"}
+                        required
+                        value={values.headquartersCity}
+                        onChange={handleChange}
+                        error={
+                          touched.headquartersCity && errors.headquartersCity
+                        }
+                      />
+                      <CustomInput
+                        label={
+                          "Accounting period starting from (which has been filed the latest)"
+                        }
+                        name={"entityCity"}
+                        required
+                        value={values.headquartersCity}
+                        onChange={handleChange}
+                        error={
+                          touched.headquartersCity && errors.headquartersCity
+                        }
+                      />
+                      <CustomInput
+                        label={"Accounting period to "}
+                        name={"entityCity"}
+                        required
+                        value={values.headquartersCity}
+                        onChange={handleChange}
+                        error={
+                          touched.headquartersCity && errors.headquartersCity
+                        }
+                      />
+                      <CustomInput
+                        label={"Relationship period from"}
+                        name={"entityCity"}
+                        required
+                        value={values.headquartersCity}
+                        onChange={handleChange}
+                        error={
+                          touched.headquartersCity && errors.headquartersCity
+                        }
+                      />
+                      <Typography>
+                        Upload the parent’s latest consolidated financial
+                        statement to prove the relationship.{" "}
+                      </Typography>
+                      <input type={"file"} />
+                    </Box>
+                  ) : (
+                    <>
+                      <Typography>
+                        Information about ultimate parent company *
+                      </Typography>
+                      <CustomRadioButtonsGroup
+                        flexDirection={"column"}
+                        value={"smth"}
+                        buttonsArray={radioButtonsArray}
+                      />
+                    </>
+                  )}
                 </Box>
               ) : (
                 <></>
@@ -549,24 +667,28 @@ const Component = ({ data }) => {
             </Box>
           </>
         )}
-        <CustomCheckBox
-          name={"acceptTerms"}
-          value={values.acceptTerms}
-          onChange={handleChange}
-          label={
-            "*I here by accept the Terms & Conditions of LEI Register and give permission to apply for an LEI."
-          }
-          error={touched.acceptTerms && errors.acceptTerms}
-          formikData={data}
-        />
-        <CustomCheckBox
-          name={"weMayContact"}
-          value={values.weMayContact}
-          onChange={handleChange}
-          label={"*Please note that we may contact you to request a signature."}
-          error={touched.weMayContact && errors.weMayContact}
-          formikData={data}
-        />
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <CustomCheckBox
+            name={"acceptTerms"}
+            value={values.acceptTerms}
+            onChange={handleChange}
+            label={
+              "*I here by accept the Terms & Conditions of LEI Register and give permission to apply for an LEI."
+            }
+            error={touched.acceptTerms && errors.acceptTerms}
+            formikData={data}
+          />
+          <CustomCheckBox
+            name={"weMayContact"}
+            value={values.weMayContact}
+            onChange={handleChange}
+            label={
+              "*Please note that we may contact you to request a signature."
+            }
+            error={touched.weMayContact && errors.weMayContact}
+            formikData={data}
+          />
+        </Box>
         <Box sx={{ display: "flex" }}>
           <Button
             onClick={() => handleOpen()}
