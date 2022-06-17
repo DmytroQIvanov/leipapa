@@ -261,7 +261,7 @@ const Component = ({ data }) => {
 
         <Box sx={{ display: "flex", flexDirection: "column", mb: "15px" }}>
           <CustomRadioButtonsGroup
-            title={"???"}
+            title={"Entity type"}
             value={values.typeOfEmployment}
             handleChange={(e, value) => {
               console.log(value);
@@ -691,7 +691,7 @@ const Component = ({ data }) => {
         </Box>
         <Box sx={{ display: "flex" }}>
           <Button
-            onClick={() => handleOpen()}
+            onClick={handleSubmit}
             variant={"contained"}
             sx={{ m: "20px auto" }}
           >
