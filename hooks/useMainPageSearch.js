@@ -51,7 +51,10 @@ const UseMainPageSearch = ({ values }) => {
   }, [companiesText]);
 
   useEffect(() => {
-    if (arrayCountriesWithState.includes(values.country.id)) {
+    if (
+      values.country?.id &&
+      arrayCountriesWithState.includes(values.country.id)
+    ) {
       axios
         .get(
           `https://api.gleif.org/api/v1/regions?page[number]=1&page[size]=9999`,

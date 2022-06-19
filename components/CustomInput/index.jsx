@@ -27,6 +27,7 @@ const Index = ({
   width,
   questionLink,
   type = "input",
+  handleSubTitle,
   ...other
 }) => {
   const style = {
@@ -98,7 +99,7 @@ const Index = ({
   };
   return (
     <div style={{ position: "relative" }} className={"customInput"}>
-      <FormControl fullWidth={fullWidth} sx={{ width }}>
+      <FormControl fullWidth={fullWidth} sx={{ width, position: "relative" }}>
         <InputLabel style={{ left: "-14px" }}>
           <Box sx={{ display: "flex" }}>
             {label}
@@ -108,25 +109,37 @@ const Index = ({
           </Box>
         </InputLabel>
         {Component()}
-        {questionLink && (
-          <Box onClick={handleOpen}>
-            <HelpOutlineOutlinedIcon
-              className={styles.helpOutlineOutlinedIcon}
-            />
-          </Box>
-        )}
-        <Popper open={open} sx={{ background: "red" }}>
-          <Box sx={{ border: 1, p: 1, bgcolor: "background.paper" }}>
-            The content of the Popper.
-          </Box>
-        </Popper>
+        <div>
+          {questionLink && (
+            <Box onClick={handleOpen} className={styles.questionContainer}>
+              <HelpOutlineOutlinedIcon
+                className={styles.helpOutlineOutlinedIcon}
+              />
+              <Box
+                sx={{
+                  border: 1,
+                  p: 1,
+                  bgcolor: "background.paper",
+                  position: "absolute",
+                  right: "0px",
+                }}
+                className={styles.questionBlock}
+              >
+                {questionLink}
+              </Box>
+            </Box>
+          )}
+        </div>
+
         {error && (
           <FormHelperText className={styles.error}>{error}</FormHelperText>
         )}
         {subTitle && (
-          <FormHelperText className={styles.subtitle}>
-            {subTitle}
-          </FormHelperText>
+          <div onClick={handleSubTitle && handleSubTitle}>
+            <FormHelperText className={styles.subtitle}>
+              {subTitle}
+            </FormHelperText>
+          </div>
         )}
       </FormControl>
     </div>

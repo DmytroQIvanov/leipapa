@@ -20,10 +20,31 @@ $blueColor:#4141c9;
   color: #a41f1f;
   cursor: default;
 }
+
+
 .helpOutlineOutlinedIcon{
   position: absolute;
   right: 0px;
   bottom: 8px;
   cursor: pointer;
   fill: #4141c9;
+}
+
+.questionContainer{
+  &:hover{
+   .questionBlock{
+     visibility: visible;
+   }
+  }
+  .questionBlock{
+    width: 90%;
+    visibility: hidden;
+    padding: 10px 10px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 4;
+
+
+  }
 }

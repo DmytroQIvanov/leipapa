@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Autocomplete,
-  Box,
-  Button,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import styles from "./MainPage.module.scss";
 import CustomInput from "../../components/CustomInput";
 import SelectableBlock from "../../components/SelectableBlock";
@@ -13,47 +7,15 @@ import useMainPageSearch from "../../hooks/useMainPageSearch";
 import CustomRadioButtonsGroup from "../../components/CustomRadioButtons";
 import ConfirmModal from "../../components/ConfirmModal";
 import CountriesAutocomplete from "./Components/CountriesAutocomplete";
-import { renderOptionsFunction } from "./Functions/renderOptionsFunction";
 import CustomCheckBox from "../../components/CustomCheckBox";
-
-const radioButtonsArray = [
-  {
-    value: "1d",
-    label:
-      "Natural Persons: There is no parent entity according to the definition used because the entity is controlled by the natural person or persons without any intermediate legal entity meeting the definition of accounting consolidating parent. ",
-  },
-  {
-    value: "2d",
-    label:
-      "Non Consolidating: There is no parent according to the definition used, because the entity is controlled by legal entities not subject to preparing consolidated financial statements.",
-  },
-  {
-    value: "3d",
-    label:
-      "No Known Person: There is no parent according to the definition used in the Legal Entity Identifier Foundation because there is no known person controlling the entity (e.g., diversified shareholding). ",
-  },
-  {
-    value: "4d",
-    label:
-      "Legal Obstacles: Obstacles in the laws or regulations of a jurisdiction prevent providing or publishing this information. The entity can not publish a parent entity in the Global LEI number database. ",
-  },
-  {
-    value: "5d",
-    label:
-      "Binding Legal Commitments: Binding legal commitments (other than the laws or regulations of a jurisdiction), such as articles governing the legal entity or a contract, prevent providing or publishing this information. ",
-  },
-  {
-    value: "6d",
-    label:
-      "Detriment Not Excluded: The child entity has sought to consult the parent entity about the reporting of the parent information but could not confirm the absence of detriment in a way that can appropriately prevent liability risks for the child entity. ",
-  },
-
-  {
-    value: "7d",
-    label:
-      "Disclosure Detrimental: The disclosure of this information would be detrimental to the legal entity or the relevant parent. This will include reasons generally accepted by public authorities in similar circumstances, based on a declaration by the entity",
-  },
-];
+import FirstAndLastName from "./Components/FirstAndLastName";
+import Companies from "./Components/Companies";
+import Email from "./Components/Email";
+import CompanyNumber from "./Components/CompanyNumber";
+import EntityAddressBlock from "./Components/EntityAddressBlock";
+import HeadquartersAddressBlock from "./Components/HeadquartersAddressBlock";
+import DirectParentCompanySubBlock from "./Components/DirectParentCompanySubBlock";
+import UltimateParentCompany from "./Components/UltimateParentCompany";
 
 const Component = ({ data }) => {
   //HOOKS
@@ -74,12 +36,14 @@ const Component = ({ data }) => {
   const [confirmModalState, setConfirmModalState] = useState(false);
 
   const [inputCountry, setInputCountry] = useState("");
-  const [inputStates, setInputStates] = useState("");
-  const [inputFullName, setInputFullName] = useState("");
 
   //USE-EFFECTS
   useEffect(() => {
-    if (arrayCountriesWithState.includes(values.country.id)) {
+    if (
+      values.country &&
+      values.country.id &&
+      arrayCountriesWithState.includes(values.country.id)
+    ) {
       setStateVisibly(true);
     } else {
       setStateVisibly(false);
@@ -94,165 +58,75 @@ const Component = ({ data }) => {
     setConfirmModalState(true);
   };
 
+  const commonObject = { ...data };
+
   return (
     <form onSubmit={handleSubmit} className={styles.mainPage}>
       <div className={styles.mainPageContainer}>
         <div className={styles.mainPageContainer__firstBlock}>
-          <div style={{ display: "flex" }}>
-            {/*---COUNTRIES---*/}
-            <CountriesAutocomplete
-              {...{
-                countriesList,
-                inputCountry,
-                touched,
-                setInputCountry,
-                stateVisibly,
-                setFieldValue,
-                errors,
-              }}
-            />
+          {/*---COUNTRIES && STATES---*/}
+          <CountriesAutocomplete
+            {...{
+              ...commonObject,
+              countriesList,
+              inputCountry,
+              setInputCountry,
+              stateVisibly,
+              statesList,
+            }}
+          />
 
-            {/*---STATES---*/}
-            {stateVisibly && (
-              <Autocomplete
-                disablePortal
-                options={statesList}
-                getOptionLabel={(option) =>
-                  `${option.attributes.names[0].name} ${option.attributes.code}`
-                }
-                fullWidth={true}
-                loading={statesList.length <= 0}
-                id="combo-box-demo"
-                onChange={(e, value) => setFieldValue("state", value)}
-                renderOption={(props, option, { selected }) => {
-                  let optionString = `${option.attributes.names[0].name} ${option.attributes.code}`;
-                  return renderOptionsFunction({
-                    props,
-                    option,
-                    selected,
-                    optionString,
-                    inputText: inputStates,
-                  });
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    value={inputStates}
-                    onChange={(event) => setInputStates(event.target.value)}
-                    label="Select State"
-                    variant="standard"
-                    required
-                    error={touched.states && Boolean(errors.states)}
-                    helperText={touched.states && errors.states}
-                  />
-                )}
-              />
-            )}
-          </div>
-          {/*<CustomInput*/}
-          {/*  label={"Application first and last name"}*/}
-          {/*  required*/}
-          {/*  questionLink={"smth"}*/}
-          {/*  name={"fullName"}*/}
-          {/*  variant="standard"*/}
-          {/*  size={"medium"}*/}
-          {/*  value={values.fullName}*/}
-          {/*  onChange={handleChange}*/}
-          {/*  error={touched.fullName && errors.fullName}*/}
-          {/*  helperText={touched.fullName && errors.fullName}*/}
-          {/*/>*/}
-          <Autocomplete
-            disablePortal
-            options={company.officers.list}
-            getOptionLabel={(option) => `${option.name}`}
-            fullWidth={true}
-            loading={company.officers.loading}
-            renderOption={(props, option, { selected }) => {
-              let optionString = `${option.name}`;
-              return renderOptionsFunction({
-                props,
-                option,
-                selected,
-                optionString,
-                inputText: inputFullName,
-              });
-            }}
-            onChange={(e, value) => {
-              setFieldValue("officerFullName", value);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Application first and last name"
-                variant="standard"
-                required
-                value={inputFullName}
-                onChange={(event) => setInputFullName(event.target.value)}
-                error={touched.company && errors.company}
-              />
-            )}
-          />
+          {/*---FIRST && LAST NAME---*/}
+          <FirstAndLastName {...{ company, ...commonObject }} />
+
           {/*---Companies---*/}
-          <Autocomplete
-            disablePortal
-            options={companiesList}
-            getOptionLabel={(option) => `${option.title}`}
-            fullWidth={true}
-            loading={companies.loading}
-            renderOption={(props, option, { selected }) => {
-              let optionString = `${option.title}`;
-              return renderOptionsFunction({
-                props,
-                option,
-                selected,
-                optionString,
-                inputText: companies.value,
-              });
-            }}
-            id="combo-box-demo"
-            onChange={(e, value) => {
-              setFieldValue("company", value);
-              setFieldValue("entityAddress", value.address_line_1);
-              setFieldValue("entityCity", value.address.locality);
-              setFieldValue("entityPostalCode", value.address.postal_code);
-              setFieldValue("companyNumber", value.company_number);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Legal entity name (start typing org name - autofill possible)"
-                variant="standard"
-                name={"companyText"}
-                value={companies.value}
-                onChange={(event) => companies.handleChange(event.target.value)}
-                required
-                error={touched.company && errors.company}
-              />
-            )}
-          />
-          <CustomInput
-            label="E-mail"
-            required
-            name={"email"}
-            type={"email"}
-            subTitle={"Add another e-mail"}
-            value={values.email}
-            onChange={handleChange}
-            error={touched.email && errors.email}
-            helperText={touched.email && errors.email}
-          />
-          <CustomInput
-            label="Company number / Registration ID"
-            questionLink={"smth"}
-            required
-            name={"companyNumber"}
-            value={values.companyNumber}
-            onChange={handleChange}
-            error={touched.companyNumber && errors.companyNumber}
-          />
+          <Companies {...{ companiesList, companies, ...commonObject }} />
+
+          {/*---EMAIL---*/}
+          <Email {...{ ...commonObject }} />
+
+          {/*---COMPANY NUMBER---*/}
+          <CompanyNumber {...{ ...commonObject }} />
+          {values.addAnotherEmail && (
+            <CustomInput label="Addiction e-mail (optional)" />
+          )}
+          {/*---PHONE NUMBER---*/}
           <CustomInput label="Phone number" />
-          <CustomInput label="Vat number, if applicable (E.G. GB 999 999 999 999)" />
+
+          {/*---VAT NUMBER---*/}
+          <CustomInput label="VAT number, if applicable (e.g. GB123456789)" />
+
+          <Box sx={{ display: "flex" }}>
+            <CustomRadioButtonsGroup
+              flexDirection={"column"}
+              handleChange={(data) => setFieldValue("userAuthority", data)}
+              buttonsArray={[
+                { label: "Member of board", value: "MemberOFBoard" },
+                { label: "Power of attorney", value: "PowerOFAttorney" },
+              ]}
+              title={"User authority"}
+            />
+            {values.userAuthority === "PowerOFAttorney" && (
+              <div>
+                <Typography sx={{ fontWeight: "700", width: "300px" }}>
+                  Upload authorization letter. Maximum file size: 16 MB.
+                </Typography>
+
+                <Typography sx={{ fontWeight: "700", mt: "15px" }}>
+                  We can accept only pdf and jpg format.
+                </Typography>
+
+                <TextField
+                  variant="outlined"
+                  size={"small"}
+                  type={"file"}
+                  inputProps={{ accept: "application/pdf, application/jpg" }}
+                />
+              </div>
+            )}
+          </Box>
         </div>
+
         <SelectableBlock
           handleChange={(elem) => setFieldValue("headquartesAddress", elem)}
           value={values.headquartesAddress}
@@ -264,7 +138,6 @@ const Component = ({ data }) => {
             title={"Entity type"}
             value={values.typeOfEmployment}
             handleChange={(e, value) => {
-              console.log(value);
               setFieldValue("typeOfEmployment", value);
             }}
             buttonsArray={[
@@ -275,86 +148,18 @@ const Component = ({ data }) => {
           {values.typeOfEmployment == "company" && <input type={"file"} />}
         </Box>
         <Box className={styles.mainPageContainer__secondBlock}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "34px",
-              // width: "400px",
-              mb: "20px",
+          {/*---ENTITY ADDRESS BLOCK---*/}
+          <EntityAddressBlock {...{ handleChange, values, touched, errors }} />
+
+          {/*---HEADQUARTERS ADDRESS BLOCK---*/}
+          <HeadquartersAddressBlock
+            {...{
+              values,
+              handleChange,
+              touched,
+              errors,
             }}
-          >
-            <Typography fontWeight={700} fontSize={20}>
-              Entity Address
-            </Typography>
-            <CustomInput
-              label={"Entity address"}
-              required
-              name={"entityAddress"}
-              value={values.entityAddress}
-              onChange={handleChange}
-              error={touched.entityAddress && errors.entityAddress}
-            />
-            <CustomInput
-              label={"City"}
-              name={"entityCity"}
-              required
-              value={values.entityCity}
-              onChange={handleChange}
-              error={touched.entityCity && errors.entityCity}
-            />
-            <CustomInput
-              label={"Postal code"}
-              required
-              name={"entityPostalCode"}
-              value={values.entityPostalCode}
-              onChange={handleChange}
-              error={touched.entityPostalCode && errors.entityPostalCode}
-            />
-          </Box>
-          {!values.headquartesAddress && (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "34px",
-                mb: "20px",
-              }}
-            >
-              <Typography fontWeight={700} fontSize={20}>
-                Headquarters Address
-              </Typography>
-              <CustomInput
-                label={"Headquarters address "}
-                required
-                name={"headquartersAddress"}
-                value={values.headquartersAddress}
-                onChange={handleChange}
-                error={
-                  touched.headquartersAddress && errors.headquartersAddress
-                }
-              />
-              <CustomInput
-                label={"City"}
-                name={"entityCity"}
-                required
-                value={values.headquartersCity}
-                onChange={handleChange}
-                error={touched.headquartersCity && errors.headquartersCity}
-              />
-              <CustomInput
-                label={"Postal code"}
-                required
-                name={"entityPostalCode"}
-                value={values.headquartersPostalCode}
-                onChange={handleChange}
-                error={
-                  touched.headquartersPostalCode &&
-                  errors.headquartersPostalCode
-                }
-              />
-            </Box>
-          )}
+          />
         </Box>
 
         <SelectableBlock
@@ -383,287 +188,8 @@ const Component = ({ data }) => {
               </Typography>
             </Box>
             <Box className={styles.mainPageContainer__secondBlock}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "30px",
-                  mb: "20px",
-                  minWidth: "38vw",
-                  maxWidth: "38vw",
-                }}
-              >
-                <Typography>Information about direct parent company</Typography>
-                <Typography>
-                  NB! Validating parental data (Level 2) costs additional 10€
-                  per parent per year. Validation can take up to 48h. A complete
-                  LEI record consists of both Level 1 and Level 2 data. A legal
-                  entity is obliged to provide Level 2 data if it is available
-                  to them. If not, you can select an exception by clicking ‘NO’.
-                </Typography>
-
-                <SelectableBlock
-                  handleChange={(elem) =>
-                    setFieldValue("directParentCompany", elem)
-                  }
-                  value={values.directParentCompany}
-                  width={"100%"}
-                />
-                {values.directParentCompany ? (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "30px",
-                      mb: "20px",
-                    }}
-                  >
-                    <CustomInput
-                      label={"Parent company name"}
-                      name={"entityCity"}
-                      required
-                      value={values.headquartersCity}
-                      onChange={handleChange}
-                      error={
-                        touched.headquartersCity && errors.headquartersCity
-                      }
-                    />
-                    <CustomInput
-                      label={"Company number / Registration ID "}
-                      name={"entityCity"}
-                      required
-                      value={values.headquartersCity}
-                      onChange={handleChange}
-                      error={
-                        touched.headquartersCity && errors.headquartersCity
-                      }
-                    />
-                    <CustomInput
-                      label={"Entity address"}
-                      name={"entityCity"}
-                      required
-                      value={values.headquartersCity}
-                      onChange={handleChange}
-                      error={
-                        touched.headquartersCity && errors.headquartersCity
-                      }
-                    />
-                    <CustomInput
-                      label={"City"}
-                      name={"entityCity"}
-                      required
-                      value={values.headquartersCity}
-                      onChange={handleChange}
-                      error={
-                        touched.headquartersCity && errors.headquartersCity
-                      }
-                    />
-                    <CustomInput
-                      label={"Postal code"}
-                      name={"entityCity"}
-                      required
-                      value={values.headquartersCity}
-                      onChange={handleChange}
-                      error={
-                        touched.headquartersCity && errors.headquartersCity
-                      }
-                    />
-                    <CustomInput
-                      inputLabel={
-                        "Accounting period starting from (which has been filed the latest)"
-                      }
-                      name={"entityCity"}
-                      type={"date"}
-                      required
-                      value={values.headquartersCity}
-                      onChange={handleChange}
-                      error={
-                        touched.headquartersCity && errors.headquartersCity
-                      }
-                    />
-                    <CustomInput
-                      inputLabel={"Accounting period to "}
-                      type={"date"}
-                      name={"entityCity"}
-                      required
-                      value={values.headquartersCity}
-                      onChange={handleChange}
-                      error={
-                        touched.headquartersCity && errors.headquartersCity
-                      }
-                    />
-                    <CustomInput
-                      inputLabel={"Relationship period from"}
-                      name={"entityCity"}
-                      type={"date"}
-                      required
-                      value={values.headquartersCity}
-                      onChange={handleChange}
-                      error={
-                        touched.headquartersCity && errors.headquartersCity
-                      }
-                    />
-                    <Typography>
-                      Upload the parent’s latest consolidated financial
-                      statement to prove the relationship.{" "}
-                    </Typography>
-                    <input type={"file"} />
-                  </Box>
-                ) : (
-                  <Box>
-                    <Typography>Reason for not providing details *</Typography>
-                    <CustomRadioButtonsGroup
-                      flexDirection={"column"}
-                      value={"smth"}
-                      buttonsArray={radioButtonsArray}
-                    />
-                  </Box>
-                )}
-              </Box>
-              {!values.companyUltimate ? (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "30px",
-                    mb: "20px",
-                    minWidth: "40vw",
-                    maxWidth: "40vw",
-                  }}
-                >
-                  <Typography>
-                    Information about direct parent companys
-                  </Typography>
-                  <Typography>
-                    NB! Validating parental data (Level 2) costs additional 10€
-                    per parent per year. Validation can take up to 48h. A
-                    complete LEI record consists of both Level 1 and Level 2
-                    data. A legal entity is obliged to provide Level 2 data if
-                    it is available to them. If not, you can select an exception
-                    by clicking ‘NO’.
-                  </Typography>
-                  <SelectableBlock
-                    width={"100%"}
-                    handleChange={(elem) =>
-                      setFieldValue("informationDirectParentCompany", elem)
-                    }
-                    value={values.informationDirectParentCompany}
-                  />
-                  {values.informationDirectParentCompany ? (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "30px",
-                        mb: "20px",
-                        minWidth: "40vw",
-                        maxWidth: "40vw",
-                      }}
-                    >
-                      <CustomInput
-                        label={"Parent company name"}
-                        name={"entityCity"}
-                        required
-                        value={values.headquartersCity}
-                        onChange={handleChange}
-                        error={
-                          touched.headquartersCity && errors.headquartersCity
-                        }
-                      />
-                      <CustomInput
-                        label={"Company number / Registration ID "}
-                        name={"entityCity"}
-                        required
-                        value={values.headquartersCity}
-                        onChange={handleChange}
-                        error={
-                          touched.headquartersCity && errors.headquartersCity
-                        }
-                      />
-                      <CustomInput
-                        label={"Entity address"}
-                        name={"entityCity"}
-                        required
-                        value={values.headquartersCity}
-                        onChange={handleChange}
-                        error={
-                          touched.headquartersCity && errors.headquartersCity
-                        }
-                      />
-                      <CustomInput
-                        label={"City"}
-                        name={"entityCity"}
-                        required
-                        value={values.headquartersCity}
-                        onChange={handleChange}
-                        error={
-                          touched.headquartersCity && errors.headquartersCity
-                        }
-                      />
-                      <CustomInput
-                        label={"Postal code"}
-                        name={"entityCity"}
-                        required
-                        value={values.headquartersCity}
-                        onChange={handleChange}
-                        error={
-                          touched.headquartersCity && errors.headquartersCity
-                        }
-                      />
-                      <CustomInput
-                        label={
-                          "Accounting period starting from (which has been filed the latest)"
-                        }
-                        name={"entityCity"}
-                        required
-                        value={values.headquartersCity}
-                        onChange={handleChange}
-                        error={
-                          touched.headquartersCity && errors.headquartersCity
-                        }
-                      />
-                      <CustomInput
-                        label={"Accounting period to "}
-                        name={"entityCity"}
-                        required
-                        value={values.headquartersCity}
-                        onChange={handleChange}
-                        error={
-                          touched.headquartersCity && errors.headquartersCity
-                        }
-                      />
-                      <CustomInput
-                        label={"Relationship period from"}
-                        name={"entityCity"}
-                        required
-                        value={values.headquartersCity}
-                        onChange={handleChange}
-                        error={
-                          touched.headquartersCity && errors.headquartersCity
-                        }
-                      />
-                      <Typography>
-                        Upload the parent’s latest consolidated financial
-                        statement to prove the relationship.{" "}
-                      </Typography>
-                      <input type={"file"} />
-                    </Box>
-                  ) : (
-                    <>
-                      <Typography>
-                        Information about ultimate parent company *
-                      </Typography>
-                      <CustomRadioButtonsGroup
-                        flexDirection={"column"}
-                        value={"smth"}
-                        buttonsArray={radioButtonsArray}
-                      />
-                    </>
-                  )}
-                </Box>
-              ) : (
-                <></>
-              )}
+              <DirectParentCompanySubBlock {...{ ...commonObject }} />
+              <UltimateParentCompany {...{ ...commonObject }} />
             </Box>
           </>
         )}

@@ -3,11 +3,9 @@
     margin: 5% 5%;
     position: relative;
     &__firstBlock {
+      position: relative;
       display: grid;
-      grid-template:
-            "1fr 1fr"
-            "1fr 1fr"
-            "1fr 1fr";
+      grid-template-columns: 47% 48%;
       gap: 50px 50px;
       margin-bottom: 20px;
     }

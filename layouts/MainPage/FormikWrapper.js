@@ -25,11 +25,36 @@ const FormikWrapper = ({ children }) => {
         parentConsolidate: false,
         companyUltimate: true,
         directParentCompany: true,
+        ultimateParentCompany: true,
         companyOwned: false,
         acceptTerms: false,
         weMayContact: false,
         informationDirectParentCompany: false,
         companyName: "",
+
+        //PARENT
+        parentCompanyName: "",
+        parentCompanyNumber: "",
+        parentEntityAddress: "",
+        parentEntityCity: "",
+        parentPostalCode: "",
+        parentAccountingPeriodStarting: "",
+        parentAccountingPeriod: "",
+        parentRelationshipPeriod: "",
+
+        addAnotherEmail: false,
+
+        //ULTIMATE
+        ultimateParentCompanyName: "",
+        ultimateCompanyName: "",
+        ultimateEntityAddress: "",
+        ultimateCity: "",
+        ultimatePostalCode: "",
+        ultimatePeriodStart: "",
+        ultimateAccordingPeriod: "",
+        ultimateRelationsPeriod: "",
+
+        userAuthority: "",
       }}
       validationSchema={MainPageSchema}
       onSubmit={(values) => {
