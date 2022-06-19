@@ -12,8 +12,8 @@ $blueColor:#4141c9;
 .subtitle {
   @include CommonSub;
   right: -12px;
-  text-align: right;
-  color: #4141c9;
+  text-align: right !important;
+  color: #4141c9 !important;
 }
 .error {
   @include CommonSub;
@@ -27,7 +27,7 @@ $blueColor:#4141c9;
   right: 0px;
   bottom: 8px;
   cursor: pointer;
-  fill: #4141c9;
+  fill: #4141c9 !important;
 }
 
 .questionContainer{
