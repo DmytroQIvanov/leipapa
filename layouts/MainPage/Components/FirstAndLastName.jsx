@@ -33,6 +33,7 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
           {...params}
           label="Application First and Last Name"
           variant="standard"
+          autocomplete="off"
           required
           value={inputFullName.name}
           onChange={(event) => setInputFullName({ name: event.target.value })}

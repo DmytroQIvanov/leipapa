@@ -68,6 +68,7 @@ const Index = ({
             value={value}
             onChange={onChange}
             error={error}
+            autocomplete="off"
             {...other}
           />
         );
@@ -91,6 +92,7 @@ const Index = ({
             required={required}
             value={value}
             onChange={onChange}
+            autocomplete="off"
             error={error}
             {...other}
           />

@@ -5,7 +5,7 @@ import { Autocomplete, TextField } from "@mui/material";
 const Companies = ({
   companiesList,
   companies,
-  setFielValue,
+  setFieldValue,
   touched,
   errors,
 }) => {
@@ -44,6 +44,7 @@ const Companies = ({
           onChange={(event) => companies.handleChange(event.target.value)}
           required
           error={touched.company && errors.company}
+          autocomplete="off"
         />
       )}
     />

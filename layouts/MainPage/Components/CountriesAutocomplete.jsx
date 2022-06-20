@@ -44,6 +44,7 @@ const CountriesAutocomplete = ({
             label="Select Country (the jurisdiction of incorporation)"
             variant="standard"
             required
+            autocomplete="off"
             error={touched.country && Boolean(errors.country)}
             helperText={touched.fullName && errors.fullName}
           />
