@@ -58,7 +58,7 @@ const UltimateParentCompany = ({
           gap: "30px",
           mb: "20px",
           minWidth: "38vw",
-          maxWidth: "38vw",
+          maxWidth: "100%",
         }}
       >
         <Typography>Information about ultimate parent company</Typography>

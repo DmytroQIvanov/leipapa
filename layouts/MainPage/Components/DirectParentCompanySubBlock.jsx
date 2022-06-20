@@ -56,7 +56,7 @@ const DirectParentCompanySubBlock = ({
         gap: "30px",
         mb: "20px",
         minWidth: "38vw",
-        maxWidth: "38vw",
+        maxWidth: "100%",
       }}
     >
       <Typography>Information about direct parent company</Typography>

@@ -16,12 +16,14 @@ const Index = ({
     formikData.setFieldValue(other.name, event.target.checked);
   };
   return (
-    <FormControlLabel
-      value="end"
-      control={<Checkbox checked={value} onChange={handleChange} />}
-      label={label}
-      className={error ? styles.checkBox_error : styles.checkBox_default}
-    />
+    <div className={styles.checkBox}>
+      <FormControlLabel
+        value="end"
+        control={<Checkbox checked={value} onChange={handleChange} />}
+        label={label}
+        className={error ? styles.checkBox_error : styles.checkBox_default}
+      />
+    </div>
   );
 };
 

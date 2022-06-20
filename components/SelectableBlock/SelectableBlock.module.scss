@@ -29,6 +29,7 @@ $mainColor: #f6c667;
   }
 
   @media screen and (max-width: 900px) {
+    width: 100%;
 
     &__btn{
       font-weight: 700;
