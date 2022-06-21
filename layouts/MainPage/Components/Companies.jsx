@@ -22,6 +22,10 @@ const Companies = ({
   useEffect(() => {
     setAutoCompleteValue(companiesList[0]);
   }, [companiesList]);
+
+  useEffect(() => {
+    companies.handleChange(event.target.value);
+  }, [inputFullName]);
   return (
     <Autocomplete
       disablePortal
@@ -65,7 +69,6 @@ const Companies = ({
           value={inputFullName.title}
           onChange={(event) => {
             setInputFullName({ title: event.target.value });
-            companies.handleChange(event.target.value);
           }}
           required
           error={touched.company && errors.company}
