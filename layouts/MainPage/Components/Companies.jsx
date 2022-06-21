@@ -24,7 +24,7 @@ const Companies = ({
   }, [companiesList]);
 
   useEffect(() => {
-    companies.handleChange(event.target.value);
+    companies.handleChange(inputFullName.title);
   }, [inputFullName]);
   return (
     <Autocomplete
