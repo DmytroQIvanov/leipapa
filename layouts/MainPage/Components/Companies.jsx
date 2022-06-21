@@ -14,9 +14,10 @@ const Companies = ({
   });
 
   const [autoCompleteValue, setAutoCompleteValue] = useState(null);
-  const [companyList, setCompanyList] = useState(companiesList);
+  const [companyList, setCompanyList] = useState([]);
   useEffect(() => {
     setCompanyList(companiesList);
+    console.log(companiesList);
   }, [companiesList]);
   useEffect(() => {
     setAutoCompleteValue(companiesList[0]);
@@ -61,7 +62,10 @@ const Companies = ({
             setCompanyList([...companyList, inputFullName]);
           }}
           value={inputFullName.title}
-          onChange={(event) => setInputFullName({ title: event.target.value })}
+          onChange={(event) => {
+            setInputFullName({ title: event.target.value });
+            companies.handleChange(event.target.value);
+          }}
           required
           error={touched.company && errors.company}
           autocomplete="off"
