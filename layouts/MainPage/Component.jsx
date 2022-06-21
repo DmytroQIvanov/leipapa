@@ -45,6 +45,7 @@ const Component = ({ data }) => {
     states: { companies, company },
   } = useMainPageSearch({
     values,
+    setFieldValue,
   });
 
   //STATES

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { string } from "yup";
 
-const UseMainPageSearch = ({ values }) => {
+const UseMainPageSearch = ({ values, setFieldValue }) => {
   const arrayCountriesWithState = ["CA", "US"];
 
   const [countriesList, setCountriesList] = useState([]);
@@ -88,6 +88,7 @@ const UseMainPageSearch = ({ values }) => {
         .then((elem) => {
           console.log("officers", elem.data.items);
           setCompaniesOfficersList(elem.data.items);
+          setFieldValue("officerFullName", elem.data.items.list[0]);
         })
         .finally(() => {
           setCompaniesOfficersLoading(false);
