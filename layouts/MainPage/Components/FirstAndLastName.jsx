@@ -32,7 +32,7 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
       }}
       onChange={(e, value) => {
         setFieldValue("officerFullName", value);
-        setAutoCompleteValue(value.name);
+        setAutoCompleteValue(value);
       }}
       renderInput={(params) => (
         <TextField
@@ -43,7 +43,7 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
           required
           onBlur={() => {
             inputFullName.name.length >= 1 &&
-              setAutoCompleteValue(inputFullName.name);
+              setAutoCompleteValue(inputFullName);
             setCompanyList([...companyList, inputFullName]);
             console.log(inputFullName.name);
             console.log(autoCompleteValue);
