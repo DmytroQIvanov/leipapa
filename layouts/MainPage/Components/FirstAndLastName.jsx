@@ -12,6 +12,9 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
   useEffect(() => {
     setCompanyList(company.officers.list);
   }, [company.officers.list]);
+  useEffect(() => {
+    setAutoCompleteValue(company.officers?.list[0]);
+  }, [company.officers.list]);
   return (
     <Autocomplete
       disablePortal

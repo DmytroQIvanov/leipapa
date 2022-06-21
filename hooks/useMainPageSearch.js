@@ -88,7 +88,6 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
         .then((elem) => {
           console.log("officers", elem.data.items);
           setCompaniesOfficersList(elem.data.items);
-          setFieldValue("officerFullName", elem.data.items[0]);
         })
         .finally(() => {
           setCompaniesOfficersLoading(false);
