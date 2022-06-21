@@ -40,7 +40,7 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
           required
           onBlur={() => {
             inputFullName.name.length >= 1 &&
-              setAutoCompleteValue(company.officers.list[0]);
+              setAutoCompleteValue(inputFullName.name);
             console.log(inputFullName.name);
             console.log(autoCompleteValue);
           }}
