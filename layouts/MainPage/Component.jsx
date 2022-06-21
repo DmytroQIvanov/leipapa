@@ -215,7 +215,7 @@ const Component = ({ data }) => {
                   </div>
                   <div>
                     <b>Company:</b>
-                    {values.company?.name}
+                    {values.company?.company_name}
                   </div>
                   <div>
                     <b>Reg nr:</b>

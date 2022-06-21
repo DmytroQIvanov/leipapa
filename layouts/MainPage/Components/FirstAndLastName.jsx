@@ -7,13 +7,15 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
     name: "",
   });
 
+  const [autoCompleteValue, setAutoCompleteValue] = useState(null);
+
   return (
     <Autocomplete
       disablePortal
       options={company.officers.list}
       getOptionLabel={(option) => `${option.name}`}
       fullWidth={true}
-      value={inputFullName}
+      value={autoCompleteValue}
       loading={company.officers.loading}
       renderOption={(props, option, { selected }) => {
         let optionString = `${option.name}`;
@@ -22,11 +24,12 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
           option,
           selected,
           optionString,
-          inputText: inputFullName,
+          inputText: inputFullName.name,
         });
       }}
       onChange={(e, value) => {
         setFieldValue("officerFullName", value);
+        setAutoCompleteValue(value.name);
       }}
       renderInput={(params) => (
         <TextField
@@ -35,6 +38,12 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
           variant="standard"
           autocomplete="off"
           required
+          onBlur={() => {
+            inputFullName.name.length >= 1 &&
+              setAutoCompleteValue(company.officers.list[0]);
+            console.log(inputFullName.name);
+            console.log(autoCompleteValue);
+          }}
           value={inputFullName.name}
           onChange={(event) => setInputFullName({ name: event.target.value })}
           error={touched.company && errors.company}
