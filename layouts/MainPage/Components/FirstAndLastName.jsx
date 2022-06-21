@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { renderOptionsFunction } from "../Functions/renderOptionsFunction";
 import { Autocomplete, TextField } from "@mui/material";
 
@@ -8,11 +8,14 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
   });
 
   const [autoCompleteValue, setAutoCompleteValue] = useState(null);
-
+  const [companyList, setCompanyList] = useState(company.officers.list);
+  useEffect(() => {
+    setCompanyList(company.officers.list);
+  }, [company.officers.list]);
   return (
     <Autocomplete
       disablePortal
-      options={company.officers.list}
+      options={companyList}
       getOptionLabel={(option) => `${option.name}`}
       fullWidth={true}
       value={autoCompleteValue}
@@ -41,6 +44,7 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
           onBlur={() => {
             inputFullName.name.length >= 1 &&
               setAutoCompleteValue(inputFullName.name);
+            setCompanyList([...companyList, inputFullName]);
             console.log(inputFullName.name);
             console.log(autoCompleteValue);
           }}
