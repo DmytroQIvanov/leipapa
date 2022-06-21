@@ -47,6 +47,7 @@ const Companies = ({
         setFieldValue("entityCity", value.address.locality);
         setFieldValue("entityPostalCode", value.address.postal_code);
         setFieldValue("companyNumber", value.company_number);
+        setAutoCompleteValue(value);
       }}
       renderInput={(params) => (
         <TextField
