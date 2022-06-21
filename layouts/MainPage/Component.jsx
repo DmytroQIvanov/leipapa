@@ -72,7 +72,7 @@ const Component = ({ data }) => {
   }, [values.country]);
 
   useEffect(() => {
-    values.company && values.company.company_name && handleOpenModal();
+    values.company && handleOpenModal();
   }, [values.company]);
 
   //FUNCTIONS
