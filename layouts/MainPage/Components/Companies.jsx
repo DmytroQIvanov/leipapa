@@ -20,7 +20,7 @@ const Companies = ({
     console.log(companiesList);
   }, [companiesList]);
   useEffect(() => {
-    setAutoCompleteValue(companiesList[0]);
+    // setAutoCompleteValue(companiesList[0]);
   }, [companiesList]);
 
   useEffect(() => {
