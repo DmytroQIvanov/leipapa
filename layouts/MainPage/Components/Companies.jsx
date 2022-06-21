@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { renderOptionsFunction } from "../Functions/renderOptionsFunction";
 import { Autocomplete, TextField } from "@mui/material";
 
@@ -9,12 +9,25 @@ const Companies = ({
   touched,
   errors,
 }) => {
+  const [inputFullName, setInputFullName] = useState({
+    title: "",
+  });
+
+  const [autoCompleteValue, setAutoCompleteValue] = useState(null);
+  const [companyList, setCompanyList] = useState(companiesList);
+  useEffect(() => {
+    setCompanyList(companiesList);
+  }, [companiesList]);
+  useEffect(() => {
+    setAutoCompleteValue(companiesList[0]);
+  }, [companiesList]);
   return (
     <Autocomplete
       disablePortal
-      options={companiesList}
+      options={companyList}
       getOptionLabel={(option) => `${option.title}`}
       fullWidth={true}
+      value={autoCompleteValue}
       loading={companies.loading}
       renderOption={(props, option, { selected }) => {
         let optionString = `${option.title}`;
@@ -40,8 +53,15 @@ const Companies = ({
           label="Legal Entity name (start typing - autofill is possible)"
           variant="standard"
           name={"companyText"}
-          value={companies.value}
-          onChange={(event) => companies.handleChange(event.target.value)}
+          // value={companies.value}
+          // onChange={(event) => companies.handleChange(event.target.value)}
+          onBlur={() => {
+            inputFullName.title.length >= 1 &&
+              setAutoCompleteValue(inputFullName);
+            setCompanyList([...companyList, inputFullName]);
+          }}
+          value={inputFullName.title}
+          onChange={(event) => setInputFullName({ title: event.target.value })}
           required
           error={touched.company && errors.company}
           autocomplete="off"
