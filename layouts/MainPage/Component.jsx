@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import styles from "./MainPage.module.scss";
 import CustomInput from "../../components/CustomInput";
 import SelectableBlock from "../../components/SelectableBlock";
@@ -16,23 +16,7 @@ import EntityAddressBlock from "./Components/EntityAddressBlock";
 import HeadquartersAddressBlock from "./Components/HeadquartersAddressBlock";
 import DirectParentCompanySubBlock from "./Components/DirectParentCompanySubBlock";
 import UltimateParentCompany from "./Components/UltimateParentCompany";
-
-import Backdrop from "@mui/material/Backdrop";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "50vw",
-  borderRadius: "8px",
-  bgcolor: "background.paper",
-  // border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import ModalComponent from "./Components/ModalComponent/Index";
 
 const Component = ({ data }) => {
   //HOOKS
@@ -185,96 +169,7 @@ const Component = ({ data }) => {
             }}
           />
         </Box>
-        <div>
-          <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={open}
-            onClose={handleCloseModal}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <Fade in={open}>
-              <Box sx={style}>
-                <Typography
-                  variant="h6"
-                  component="h2"
-                  sx={{ fontWeight: "700" }}
-                >
-                  Dear customer, there is a possible duplicate match between
-                  your application and Global Legal Entity (GLEIF) database.
-                  Please check the information below to confirm if this is your
-                  company or not.
-                </Typography>
-                <Box sx={{ ml: "35px", my: "10px" }}>
-                  <div>
-                    <b>LEI:</b>
-                    {values.companyNumber}
-                  </div>
-                  <div>
-                    <b>Company:</b>
-                    {values.company?.company_name}
-                  </div>
-                  <div>
-                    <b>Reg nr:</b>
-                    {values.companyNumber}
-                  </div>
-                  <div>
-                    <b>Next renewal date:</b>
-                    {values.companyNumber}
-                  </div>
-                  <div>
-                    <b>Status:</b>
-                    {values.companyNumber}
-                  </div>
-                </Box>
-                <Typography
-                  id="transition-modal-description"
-                  sx={{ mt: 2, fontWeight: "700" }}
-                >
-                  In case this is your company information above, clock YES to
-                  proceed to LEI renewal application. If you are sure this is
-                  not your entity, click NO and proceed with new LEI
-                  application.
-                </Typography>
-
-                <Box sx={{ display: "flex", mt: "15px" }}>
-                  <Button
-                    variant={"contained"}
-                    color={"error"}
-                    sx={{
-                      width: "40%",
-                      lineHeight: "15px",
-                      fontSize: "14px",
-                      color: "black",
-                      fontWeight: "600",
-                    }}
-                    onClick={() => handleCloseModal()}
-                  >
-                    No - proceed with new LEI application.
-                  </Button>
-                  <Button
-                    variant={"contained"}
-                    color={"success"}
-                    sx={{
-                      m: "auto 0px auto auto",
-                      width: "40%",
-                      lineHeight: "15px",
-                      color: "black",
-                      fontWeight: "600",
-                    }}
-                    onClick={() => handleCloseModal()}
-                  >
-                    Yes, it is my company. Proceed with LEI Renewal
-                  </Button>
-                </Box>
-              </Box>
-            </Fade>
-          </Modal>
-        </div>
+        <div></div>
         <SelectableBlock
           handleChange={(elem) => setFieldValue("companyOwned", elem)}
           label={"Is the company owned by another company? (>50%) *"}
@@ -337,6 +232,11 @@ const Component = ({ data }) => {
             Submit
           </Button>
         </Box>
+        <ModalComponent
+          open={open}
+          handleCloseModal={handleCloseModal}
+          values={values}
+        />
         <ConfirmModal
           modalOpen={confirmModalState}
           handleClose={handleClose}
