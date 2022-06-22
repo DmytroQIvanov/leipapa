@@ -19,9 +19,6 @@ const Companies = ({
     setCompanyList(companiesList);
     console.log(companiesList);
   }, [companiesList]);
-  useEffect(() => {
-    // setAutoCompleteValue(companiesList[0]);
-  }, [companiesList]);
 
   useEffect(() => {
     companies.handleChange(inputFullName.title);
@@ -52,6 +49,7 @@ const Companies = ({
         setFieldValue("entityPostalCode", value.address.postal_code);
         setFieldValue("companyNumber", value.company_number);
         setAutoCompleteValue(value);
+        companies.handleChange(value.title);
       }}
       renderInput={(params) => (
         <TextField
