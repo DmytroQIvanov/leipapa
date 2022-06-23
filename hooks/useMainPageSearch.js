@@ -83,10 +83,10 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
     let config = {
       method: "get",
       url: "https://apistaging.rapidlei.com/v1/auth/token",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "https://leipapa.vercel.app/",
-      },
+      // headers: {
+      //   "Content-Type": "application/json",
+      //   "Access-Control-Allow-Origin": "https://leipapa.vercel.app/",
+      // },
       data,
     };
     axios(config)
