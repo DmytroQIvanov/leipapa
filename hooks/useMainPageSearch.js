@@ -85,7 +85,8 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
       url: "https://apistaging.rapidlei.com/v1/auth/token",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "https://leipapa.vercel.app/",
+        "Access-Control-Request-Headers": "Content-Type, Authorization",
       },
       data,
     };
