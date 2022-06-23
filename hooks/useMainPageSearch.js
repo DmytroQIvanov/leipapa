@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { string } from "yup";
+// import { env } from "eslint-config-next";
 
 const UseMainPageSearch = ({ values, setFieldValue }) => {
   const arrayCountriesWithState = ["CA", "US"];
@@ -72,6 +72,31 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
         });
     }
   }, [values.country]);
+
+  useEffect(() => {
+    let data = JSON.stringify({
+      client_id: "Makhmud.Makhmudov.LEIPapa@rapidlei-staging.com",
+      client_secret: "gYuexPg9Qc9dtiH03ZGlycQ73pQjq4aToj9ECNkZg",
+      grant_type: "client_credentials",
+    });
+    console.log(data);
+    let config = {
+      method: "get",
+      url: "https://apistaging.rapidlei.com/v1/auth/token",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      data,
+    };
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   useEffect(() => {
     if (values.company) {
