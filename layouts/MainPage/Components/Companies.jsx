@@ -8,6 +8,7 @@ const Companies = ({
   setFieldValue,
   touched,
   errors,
+  values,
 }) => {
   const [inputFullName, setInputFullName] = useState({
     title: "",
@@ -16,13 +17,19 @@ const Companies = ({
   const [autoCompleteValue, setAutoCompleteValue] = useState(null);
   const [companyList, setCompanyList] = useState([]);
   useEffect(() => {
-    setCompanyList(companiesList);
-    console.log(companiesList);
+    if (autoCompleteValue) setCompanyList(companiesList);
   }, [companiesList]);
 
   useEffect(() => {
-    companies.handleChange(inputFullName.title);
-  }, [inputFullName]);
+    setFieldValue("companyName", autoCompleteValue);
+    console.log(autoCompleteValue);
+  }, [autoCompleteValue]);
+
+  useEffect(() => {
+    console.log(errors.companyName?.title);
+    console.log(touched);
+    console.log(values.companyName);
+  }, [errors, touched]);
   return (
     <Autocomplete
       disablePortal
@@ -43,14 +50,14 @@ const Companies = ({
       }}
       id="combo-box-demo"
       onChange={(e, value) => {
-        setFieldValue("company", value);
+        setFieldValue("companyName", value);
         setFieldValue("entityAddress", value.address.address_line_1);
         setFieldValue("entityCity", value.address.locality);
         setFieldValue("entityPostalCode", value.address.postal_code);
         setFieldValue("companyNumber", value.company_number);
         setAutoCompleteValue(value);
         setInputFullName(value.title);
-        // companies.handleChange(va.title);
+        // companies.handleChange(value);
       }}
       renderInput={(params) => (
         <TextField
@@ -58,8 +65,6 @@ const Companies = ({
           label="Legal Entity name (start typing - autofill is possible)"
           variant="standard"
           name={"companyText"}
-          // value={companies.value}
-          // onChange={(event) => companies.handleChange(event.target.value)}
           onBlur={() => {
             inputFullName.title.length >= 1 &&
               setAutoCompleteValue(inputFullName);
@@ -70,7 +75,7 @@ const Companies = ({
             setInputFullName({ title: event.target.value });
           }}
           required
-          error={touched.company && errors.company}
+          error={touched.companyName && errors.companyName?.title}
           autocomplete="off"
         />
       )}

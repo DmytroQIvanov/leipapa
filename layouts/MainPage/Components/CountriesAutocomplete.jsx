@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import { renderOptionsFunction } from "../Functions/renderOptionsFunction";
 
@@ -11,6 +11,7 @@ const CountriesAutocomplete = ({
   setFieldValue,
   errors,
   statesList,
+  values,
 }) => {
   const [inputStates, setInputStates] = useState("");
 

@@ -15,6 +15,12 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
   useEffect(() => {
     setAutoCompleteValue(company.officers?.list[0]);
   }, [company.officers.list]);
+
+  console.log(touched);
+  useEffect(() => {
+    if (autoCompleteValue?.name)
+      setFieldValue("fullName", autoCompleteValue?.name);
+  }, [autoCompleteValue]);
   return (
     <Autocomplete
       disablePortal
@@ -34,7 +40,6 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
         });
       }}
       onChange={(e, value) => {
-        setFieldValue("officerFullName", value);
         setAutoCompleteValue(value);
       }}
       renderInput={(params) => (
@@ -53,7 +58,7 @@ const FirstAndLastName = ({ company, errors, setFieldValue, touched }) => {
           }}
           value={inputFullName.name}
           onChange={(event) => setInputFullName({ name: event.target.value })}
-          error={touched.company && errors.company}
+          error={touched.fullName && errors.fullName}
         />
       )}
     />

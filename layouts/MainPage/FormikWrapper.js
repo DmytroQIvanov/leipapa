@@ -1,6 +1,7 @@
 import React from "react";
 import { MainPageSchema } from "./ValidationSchema";
 import { Formik } from "formik";
+import axios from "axios";
 
 const FormikWrapper = ({ children }) => {
   return (
@@ -58,7 +59,21 @@ const FormikWrapper = ({ children }) => {
       }}
       validationSchema={MainPageSchema}
       onSubmit={(values) => {
+        const data = {
+          companyName: values.companyName?.title,
+          companyNumber: values.companyNumber,
+          firstName: values.fullName,
+          lastName: values.fullName,
+          isLevel2DataAvailable: true,
+          multiYearSupport: 1,
+          legalJurisdiction: values.country.id,
+        };
         alert(JSON.stringify(values, null, 2));
+        alert(JSON.stringify(data, null, 2));
+
+        axios
+          .post("http://45.90.33.248:8000/api/v1/lei/demand/", data)
+          .then((elem) => console.log(elem));
       }}
     >
       {(formikData) => children({ formikData })}

@@ -2,18 +2,18 @@ import * as Yup from "yup";
 
 export const MainPageSchema = Yup.object({
   country: Yup.object().required("Country is required"),
-  fullName: Yup.string()
-    .min(3)
-    .max(10)
-    .required("First and Last name is required"),
+  // fullName: Yup.string()
+  //   .min(3)
+  //   .max(10)
+  //   .required("First and Last name is required"),
   email: Yup.string().email().required("Email is required"),
   companyNumber: Yup.string()
     .min(3)
     .max(10)
     .required("Company Number is required"),
-  company: Yup.object({ title: Yup.string().min(3).required() }).required(
-    "Company is required"
-  ),
+  // companyName: Yup.object({ title: Yup.string().min(3).required() }).required(
+  //   "Company name is required"
+  // ),
 
   acceptTerms: Yup.bool().oneOf([true], "Field must be checked"),
   weMayContact: Yup.bool().oneOf([true], "Field must be checked"),
@@ -28,16 +28,16 @@ export const MainPageSchema = Yup.object({
     .max(10)
     .required("Entity Postal Code required"),
 
-  headquartersAddress: Yup.string()
-    .min(3)
-    .max(10)
-    .required("Entity address required"),
-  headquartersCity: Yup.string()
-    .min(3)
-    .max(10)
-    .required("Entity City required"),
-  headquartersPostalCode: Yup.string()
-    .min(3)
-    .max(10)
-    .required("Entity Postal Code required"),
+  // headquartersAddress: Yup.string()
+  //   .min(3)
+  //   .max(10)
+  //   .required("Entity address required"),
+  // headquartersCity: Yup.string()
+  //   .min(3)
+  //   .max(10)
+  //   .required("Entity City required"),
+  // headquartersPostalCode: Yup.string()
+  //   .min(3)
+  //   .max(10)
+  //   .required("Entity Postal Code required"),
 });

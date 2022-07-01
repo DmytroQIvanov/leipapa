@@ -32,6 +32,11 @@ const Component = ({ data }) => {
     setFieldValue,
   });
 
+  useEffect(() => {
+    console.log("errors", errors);
+    console.log("touched", touched);
+  }, [errors]);
+
   //STATES
   const arrayCountriesWithState = ["CA", "US"];
   const [stateVisibly, setStateVisibly] = useState(false);
@@ -141,20 +146,6 @@ const Component = ({ data }) => {
           value={values.headquartesAddress}
           label={"Headquartes address is identical to legal address?"}
         />
-        {/*<Box sx={{ display: "flex", flexDirection: "column", mb: "15px" }}>*/}
-        {/*  <CustomRadioButtonsGroup*/}
-        {/*    title={"Entity type"}*/}
-        {/*    value={values.typeOfEmployment}*/}
-        {/*    handleChange={(e, value) => {*/}
-        {/*      setFieldValue("typeOfEmployment", value);*/}
-        {/*    }}*/}
-        {/*    buttonsArray={[*/}
-        {/*      { label: "Private person", value: "private" },*/}
-        {/*      { label: "Company", value: "company" },*/}
-        {/*    ]}*/}
-        {/*  />*/}
-        {/*  {values.typeOfEmployment == "company" && <input type={"file"} />}*/}
-        {/*</Box>*/}
         <Box className={styles.mainPageContainer__secondBlock}>
           {/*---ENTITY ADDRESS BLOCK---*/}
           <EntityAddressBlock {...{ handleChange, values, touched, errors }} />
