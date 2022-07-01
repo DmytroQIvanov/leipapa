@@ -92,7 +92,7 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
       data,
     };
     axios
-      .patch("https://apistaging.rapidlei.com/v1/auth/token", {
+      .patch("https://apistaging.rapidlei.com/v1/auth/token", data, {
         headers: {
           client_id: "Makhmud.Makhmudov.LEIPapa@rapidlei-staging.com",
           client_secret: "gYuexPg9Qc9dtiH03ZGlycQ73pQjq4aToj9ECNkZg",
