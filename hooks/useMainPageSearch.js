@@ -88,6 +88,7 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
         "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
         "Access-Control-Request-Headers": "Authorization, Content-Type",
         "Content-Type": "application/json",
+        Origin: "https://leipapa.vercel.app/",
       },
       data,
     };
