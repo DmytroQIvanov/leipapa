@@ -94,17 +94,9 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
     axios
       .get("https://apistaging.rapidlei.com/v1/auth/token", {
         headers: {
-          // "Access-Control-Allow-Origin": "*",
-          // "Access-Control-Allow-Origin": "https://leipapa.vercel.app/",
-          // "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-          // "Access-Control-Request-Headers": "Authorization, Content-Type",
-          Accept: "application/json",
-          // "Access-Control-Allow-Methods":
-          //   "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-          // "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
-          // "Access-Control-Allow-Origin": " *",
-          // "Content-Type": "application/json",
-          // Origin: "https://leipapa.vercel.app/",
+          client_id: "Makhmud.Makhmudov.LEIPapa@rapidlei-staging.com",
+          client_secret: "gYuexPg9Qc9dtiH03ZGlycQ73pQjq4aToj9ECNkZg",
+          grant_type: "client_credentials",
         },
       })
       .then(function (response) {
