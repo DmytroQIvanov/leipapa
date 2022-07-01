@@ -81,7 +81,6 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
     });
     console.log(data);
     let config = {
-      method: "get",
       url: "https://apistaging.rapidlei.com/v1/auth/token",
       // headers: {
       //   "Access-Control-Allow-Origin": "https://leipapa.vercel.app/",
@@ -92,7 +91,12 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
       // },
       data,
     };
-    axios(config)
+    axios
+      .get("https://apistaging.rapidlei.com/v1/auth/token", {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
       .then(function (response) {
         console.log(JSON.stringify(response.data));
       })
