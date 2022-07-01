@@ -74,34 +74,55 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
   }, [values.country]);
 
   useEffect(() => {
-    let data = JSON.stringify({
+    // let data = JSON.stringify({
+    //   client_id: "Makhmud.Makhmudov.LEIPapa@rapidlei-staging.com",
+    //   client_secret: "gYuexPg9Qc9dtiH03ZGlycQ73pQjq4aToj9ECNkZg",
+    //   grant_type: "client_credentials",
+    // });
+    // console.log(data);
+    // let config = {
+    //   url: "https://apistaging.rapidlei.com/v1/auth/token",
+    //   // headers: {
+    //   //   "Access-Control-Allow-Origin": "https://leipapa.vercel.app/",
+    //   //   "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+    //   //   "Access-Control-Request-Headers": "Authorization, Content-Type",
+    //   //   "Content-Type": "application/json",
+    //   //   Origin: "https://leipapa.vercel.app/",
+    //   // },
+    //   data,
+    // };
+    // axios
+    //   .patch("https://apistaging.rapidlei.com/v1/auth/token", data, {
+    //     headers: {
+    //       // client_id: "Makhmud.Makhmudov.LEIPapa@rapidlei-staging.com",
+    //       // client_secret: "gYuexPg9Qc9dtiH03ZGlycQ73pQjq4aToj9ECNkZg",
+    //       // grant_type: "client_credentials",
+    //       Origin: "https://leipapa.vercel.app",
+    //       "Access-Control-Request-Method": "PATCH",
+    //       "Access-Control-Request-Headers": "Content-Type,API-Key",
+    //     },
+    //   })
+    //   .then(function (response) {
+    //     console.log(JSON.stringify(response.data));
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+    var data = JSON.stringify({
       client_id: "Makhmud.Makhmudov.LEIPapa@rapidlei-staging.com",
       client_secret: "gYuexPg9Qc9dtiH03ZGlycQ73pQjq4aToj9ECNkZg",
       grant_type: "client_credentials",
     });
-    console.log(data);
-    let config = {
+    var config = {
+      method: "patch",
       url: "https://apistaging.rapidlei.com/v1/auth/token",
-      // headers: {
-      //   "Access-Control-Allow-Origin": "https://leipapa.vercel.app/",
-      //   "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-      //   "Access-Control-Request-Headers": "Authorization, Content-Type",
-      //   "Content-Type": "application/json",
-      //   Origin: "https://leipapa.vercel.app/",
-      // },
-      data,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      data: data,
     };
-    axios
-      .patch("https://apistaging.rapidlei.com/v1/auth/token", data, {
-        headers: {
-          client_id: "Makhmud.Makhmudov.LEIPapa@rapidlei-staging.com",
-          client_secret: "gYuexPg9Qc9dtiH03ZGlycQ73pQjq4aToj9ECNkZg",
-          grant_type: "client_credentials",
-          Origin: "https://leipapa.vercel.app",
-          "Access-Control-Request-Method": "PATCH",
-          "Access-Control-Request-Headers": "Content-Type,API-Key",
-        },
-      })
+
+    axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
       })
