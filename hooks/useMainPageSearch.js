@@ -96,10 +96,10 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
         headers: {
           // "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Origin": "https://leipapa.vercel.app/",
-          "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-          "Access-Control-Request-Headers": "Authorization, Content-Type",
+          // "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+          // "Access-Control-Request-Headers": "Authorization, Content-Type",
           "Content-Type": "application/json",
-          Origin: "https://leipapa.vercel.app/",
+          // Origin: "https://leipapa.vercel.app/",
         },
       })
       .then(function (response) {
