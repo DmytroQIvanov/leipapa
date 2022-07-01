@@ -94,7 +94,7 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
     axios
       .get("https://apistaging.rapidlei.com/v1/auth/token", {
         headers: {
-          // "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": "*",
           // "Access-Control-Allow-Origin": "https://leipapa.vercel.app/",
           // "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
           // "Access-Control-Request-Headers": "Authorization, Content-Type",
