@@ -57,7 +57,7 @@ const FormikWrapper = ({ children }) => {
 
         userAuthority: "",
       }}
-      validationSchema={MainPageSchema}
+      validationSchema={{ MainPageSchema }}
       onSubmit={(values) => {
         const data = {
           companyName: values.companyName?.title,
