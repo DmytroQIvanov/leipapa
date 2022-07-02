@@ -81,7 +81,9 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
     });
     console.log(data);
     let config = {
-      url: "https://apistaging.rapidlei.com/v1/auth/token",
+      url:
+        "https://corsproxy.io/?" +
+        encodeURIComponent("https://apistaging.rapidlei.com/v1/auth/token"),
       // headers: {
       //   "Access-Control-Allow-Origin": "https://leipapa.vercel.app/",
       //   "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
@@ -91,8 +93,11 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
       // },
       data,
     };
+    const url =
+      "https://corsproxy.io/?" +
+      encodeURIComponent("https://apistaging.rapidlei.com/v1/auth/token");
     axios
-      .patch("https://apistaging.rapidlei.com/v1/auth/token", data, {
+      .patch(url, data, {
         headers: {
           // client_id: "Makhmud.Makhmudov.LEIPapa@rapidlei-staging.com",
           // client_secret: "gYuexPg9Qc9dtiH03ZGlycQ73pQjq4aToj9ECNkZg",
