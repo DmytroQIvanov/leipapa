@@ -102,9 +102,9 @@ const UseMainPageSearch = ({ values, setFieldValue }) => {
           // client_id: "Makhmud.Makhmudov.LEIPapa@rapidlei-staging.com",
           // client_secret: "gYuexPg9Qc9dtiH03ZGlycQ73pQjq4aToj9ECNkZg",
           // grant_type: "client_credentials",
-          Origin: "https://leipapa.vercel.app",
-          "Access-Control-Request-Method": "PATCH",
-          "Access-Control-Request-Headers": "Content-Type,API-Key",
+          // Origin: "https://leipapa.vercel.app",
+          // "Access-Control-Request-Method": "PATCH",
+          // "Access-Control-Request-Headers": "Content-Type,API-Key",
         },
       })
       .then(function (response) {
