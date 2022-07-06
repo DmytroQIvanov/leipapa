@@ -17,7 +17,8 @@ const Companies = ({
   const [autoCompleteValue, setAutoCompleteValue] = useState(null);
   const [companyList, setCompanyList] = useState([]);
   useEffect(() => {
-    if (autoCompleteValue) setCompanyList(companiesList);
+    // if (autoCompleteValue) setCompanyList(companiesList);
+    if (companiesList) setCompanyList(companiesList);
   }, [companiesList]);
 
   useEffect(() => {
@@ -26,20 +27,20 @@ const Companies = ({
   }, [autoCompleteValue]);
 
   useEffect(() => {
-    console.log(errors.companyName?.title);
-    console.log(touched);
-    console.log(values.companyName);
-  }, [errors, touched]);
+    // console.log(errors.companyName?.title);
+    // console.log(touched);
+    console.log(companiesList);
+  }, [companiesList]);
   return (
     <Autocomplete
       disablePortal
       options={companyList}
-      getOptionLabel={(option) => `${option.title}`}
+      getOptionLabel={(option) => `${option.companyName}`}
       fullWidth={true}
       value={autoCompleteValue}
       loading={companies.loading}
       renderOption={(props, option, { selected }) => {
-        let optionString = `${option.title}`;
+        let optionString = `${option.companyName}`;
         return renderOptionsFunction({
           props,
           option,
@@ -51,12 +52,12 @@ const Companies = ({
       id="combo-box-demo"
       onChange={(e, value) => {
         setFieldValue("companyName", value);
-        setFieldValue("entityAddress", value.address.address_line_1);
-        setFieldValue("entityCity", value.address.locality);
-        setFieldValue("entityPostalCode", value.address.postal_code);
-        setFieldValue("companyNumber", value.company_number);
+        // setFieldValue("entityAddress", value.address.address_line_1);
+        // setFieldValue("entityCity", value.address.locality);
+        // setFieldValue("entityPostalCode", value.address.postal_code);
+        // setFieldValue("companyNumber", value.company_number);
         setAutoCompleteValue(value);
-        setInputFullName(value.title);
+        setInputFullName(value.companyName);
         // companies.handleChange(value);
       }}
       renderInput={(params) => (
@@ -73,6 +74,7 @@ const Companies = ({
           value={inputFullName.title}
           onChange={(event) => {
             setInputFullName({ title: event.target.value });
+            companies.handleChange(event.target.value);
           }}
           required
           error={touched.companyName && errors.companyName?.title}

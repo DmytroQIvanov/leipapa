@@ -80,7 +80,7 @@ const Index = ({
               inputFormat="MM/dd/yyyy"
               // value={value}
               onChange={() => {}}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params) => <TextField size={"small"} {...params} />}
             />
           </LocalizationProvider>
         );
